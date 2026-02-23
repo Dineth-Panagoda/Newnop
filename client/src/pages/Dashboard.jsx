@@ -141,29 +141,29 @@ const Dashboard = () => {
 
         {/* Statistics Cards */}
         <div className={styles.statsGrid}>
-          <Card className={styles.statCard} style={{ background: '#e0e7ff' }}>
-            <div className={styles.statValue} style={{ color: '#4f46e5' }}>
+          <Card className={styles.statCard}>
+            <div className={styles.statValue}>
               {statsLoading ? '...' : stats.Open || 0}
             </div>
             <div className={styles.statLabel}>Open</div>
           </Card>
 
-          <Card className={styles.statCard} style={{ background: '#fef3c7' }}>
-            <div className={styles.statValue} style={{ color: '#d97706' }}>
+          <Card className={styles.statCard}>
+            <div className={styles.statValue}>
               {statsLoading ? '...' : stats.InProgress || 0}
             </div>
             <div className={styles.statLabel}>In Progress</div>
           </Card>
 
-          <Card className={styles.statCard} style={{ background: '#d1fae5' }}>
-            <div className={styles.statValue} style={{ color: '#059669' }}>
+          <Card className={styles.statCard}>
+            <div className={styles.statValue}>
               {statsLoading ? '...' : stats.Resolved || 0}
             </div>
             <div className={styles.statLabel}>Resolved</div>
           </Card>
 
-          <Card className={styles.statCard} style={{ background: '#e5e7eb' }}>
-            <div className={styles.statValue} style={{ color: '#6b7280' }}>
+          <Card className={styles.statCard}>
+            <div className={styles.statValue}>
               {statsLoading ? '...' : stats.Closed || 0}
             </div>
             <div className={styles.statLabel}>Closed</div>

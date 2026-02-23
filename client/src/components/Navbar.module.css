@@ -1,5 +1,5 @@
 /* ========================================
-   NAVBAR COMPONENT STYLES
+   NAVBAR COMPONENT STYLES - NEWNOP THEME
    ======================================== */
 
 /* Main nav container */
@@ -9,13 +9,14 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid var(--gray-100);
 }
 
 /* Inner container */
 .navContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,49 +27,76 @@
 .logo {
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
-  color: var(--primary-color);
+  color: var(--text-primary);
   text-decoration: none;
+  transition: color var(--transition-base);
 }
 
 .logo:hover {
-  color: var(--primary-dark);
+  color: var(--primary-color);
 }
 
 /* Navigation links container */
 .navLinks {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-xl);
 }
 
 /* Individual nav link */
 .navLink {
-  color: var(--gray-700);
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: var(--font-medium);
-  transition: color 0.2s;
+  transition: color var(--transition-base);
+  position: relative;
 }
 
 .navLink:hover {
-  color: var(--primary-color);
+  color: var(--text-primary);
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
 }
 
 /* User info section */
 .userInfo {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 /* User email */
 .userEmail {
   font-size: var(--text-sm);
-  color: var(--gray-600);
+  color: var(--text-tertiary);
+  font-weight: var(--font-medium);
 }
 
 /* Hide on small screens */
 @media (max-width: 768px) {
   .userEmail {
     display: none;
+  }
+
+  .navLinks {
+    gap: var(--spacing-md);
+  }
+
+  .navContainer {
+    padding: 0 var(--spacing-md);
   }
 }

@@ -1,14 +1,15 @@
 /* ========================================
-   CARD COMPONENT STYLES
+   CARD COMPONENT STYLES - ACRU INSPIRED
    ======================================== */
 
 /* Main card container */
 .card {
   background-color: white;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
+  border: 1px solid var(--gray-100);
 }
 
 /* Hoverable variant */
@@ -17,8 +18,9 @@
 }
 
 .card-hoverable:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+  border-color: var(--gray-200);
 }
 
 /* Padding variants */
@@ -41,7 +43,7 @@
 /* Card sub-components */
 .cardHeader {
   padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-100);
 }
 
 .cardHeader-noPadding {
@@ -62,7 +64,7 @@
 
 .cardFooter {
   padding: var(--spacing-lg);
-  border-top: 1px solid var(--gray-200);
+  border-top: 1px solid var(--gray-100);
   background-color: var(--gray-50);
 }
 
@@ -79,11 +81,11 @@
   margin: 0;
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .cardSubtitle {
   margin: 0.25rem 0 0 0;
   font-size: var(--text-sm);
-  color: var(--gray-600);
+  color: var(--text-secondary);
 }

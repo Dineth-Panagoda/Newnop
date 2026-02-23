@@ -1,63 +1,72 @@
 /* ========================================
-   BADGE COMPONENT STYLES
+   BADGE COMPONENT STYLES - NEWNOP THEME
    ======================================== */
 
 /* Base badge styles */
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.625rem;
+  padding: 0.25rem 0.75rem;
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-full);
   text-transform: uppercase;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.05em;
+  transition: all var(--transition-base);
 }
 
 /* Large size */
 .badge-large {
-  padding: 0.375rem 0.875rem;
+  padding: 0.375rem 1rem;
   font-size: var(--text-sm);
 }
 
-/* Status variants */
+/* Status variants - Using Greens and Grays */
 .badge-Open {
-  background-color: var(--info-light);
-  color: var(--info-color);
+  background-color: #E3F2FD;
+  color: #1976D2;
+  border: 1px solid #BBDEFB;
 }
 
 .badge-InProgress {
   background-color: var(--warning-light);
-  color: var(--warning-color);
+  color: #F57F17;
+  border: 1px solid #FFF59D;
 }
 
 .badge-Resolved {
   background-color: var(--success-light);
   color: var(--success-color);
+  border: 1px solid #C8E6C9;
 }
 
 .badge-Closed {
   background-color: var(--gray-200);
-  color: var(--gray-600);
+  color: var(--gray-700);
+  border: 1px solid var(--gray-300);
 }
 
-/* Priority/Severity variants */
+/* Priority variants - Low to Critical */
 .badge-Low {
-  background-color: var(--gray-200);
+  background-color: var(--gray-100);
   color: var(--gray-700);
+  border: 1px solid var(--gray-200);
 }
 
 .badge-Medium {
-  background-color: #dbeafe;
-  color: #1e40af;
+  background-color: #E3F2FD;
+  color: #1976D2;
+  border: 1px solid #BBDEFB;
 }
 
 .badge-High {
   background-color: var(--warning-light);
-  color: #c2410c;
+  color: #F57F17;
+  border: 1px solid #FFF59D;
 }
 
 .badge-Critical {
   background-color: var(--danger-light);
-  color: #991b1b;
+  color: var(--danger-color);
+  border: 1px solid #FFCDD2;
 }
