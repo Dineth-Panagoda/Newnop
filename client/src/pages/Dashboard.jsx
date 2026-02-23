@@ -3,10 +3,10 @@
 // ========================================
 // Main page showing issue statistics, list, search, filters, and pagination
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styles from './Dashboard.module.css';
 import {
   fetchIssues,
   fetchIssueStats,
@@ -21,167 +21,6 @@ import Select from '../components/common/Select';
 import Badge from '../components/common/Badge';
 import Loader from '../components/common/Loader';
 
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-md);
-`;
-
-const Header = styled.div`
-  margin-bottom: var(--spacing-xl);
-`;
-
-const Title = styled.h1`
-  margin: 0 0 var(--spacing-md) 0;
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--gray-900);
-`;
-
-const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-xl);
-`;
-
-const StatCard = styled(Card)`
-  text-align: center;
-  background: ${props => props.$bgColor || 'white'};
-`;
-
-const StatValue = styled.div`
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: ${props => props.$color || 'var(--gray-900)'};
-`;
-
-const StatLabel = styled.div`
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-  margin-top: var(--spacing-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-`;
-
-const FiltersSection = styled.div`
-  margin-bottom: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-`;
-
-const FiltersRow = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr auto;
-  gap: var(--spacing-md);
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ActionsRow = styled.div`
-  display: flex;
-  gap: var(--spacing-md);
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-`;
-
-const ExportButtons = styled.div`
-  display: flex;
-  gap: var(--spacing-sm);
-`;
-
-const IssuesList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-`;
-
-const IssueCard = styled(Card)`
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-  }
-`;
-
-const IssueHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--spacing-sm);
-`;
-
-const IssueTitle = styled.h3`
-  margin: 0;
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--gray-900);
-  flex: 1;
-`;
-
-const IssueBadges = styled.div`
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
-`;
-
-const IssueDescription = styled.p`
-  margin: var(--spacing-sm) 0;
-  color: var(--gray-600);
-  font-size: var(--text-sm);
-  line-height: 1.5;
-
-  /* Limit to 2 lines */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
-
-const IssueFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: var(--spacing-sm);
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--gray-200);
-  font-size: var(--text-sm);
-  color: var(--gray-500);
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-xl);
-`;
-
-const PageInfo = styled.span`
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-`;
-
-const EmptyState = styled.div`
-  text-align: center;
-  padding: var(--spacing-2xl);
-  color: var(--gray-500);
-`;
-
-// ========================================
-// DASHBOARD COMPONENT
-// ========================================
-
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -195,16 +34,13 @@ const Dashboard = () => {
   const [searchInput, setSearchInput] = useState(filters.search || '');
 
   // Debounce search input
-  // This prevents API calls on every keystroke
   useEffect(() => {
-    // Set a timer to update filters after user stops typing (500ms delay)
     const timer = setTimeout(() => {
       if (searchInput !== filters.search) {
         dispatch(setFilters({ search: searchInput }));
       }
-    }, 500); // 500ms debounce delay
+    }, 500);
 
-    // Clear timer if user types again before delay ends
     return () => clearTimeout(timer);
   }, [searchInput, filters.search, dispatch]);
 
@@ -237,7 +73,6 @@ const Dashboard = () => {
   // Handle page change
   const handlePageChange = (newPage) => {
     dispatch(setPage(newPage));
-    // Scroll to top when page changes
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -253,7 +88,6 @@ const Dashboard = () => {
 
   // Export issues to CSV
   const handleExportCSV = () => {
-    // Create CSV content
     const headers = ['ID', 'Title', 'Description', 'Status', 'Priority', 'Severity', 'Created At'];
     const rows = issues.map(issue => [
       issue.id,
@@ -270,7 +104,6 @@ const Dashboard = () => {
       ...rows.map(row => row.join(','))
     ].join('\n');
 
-    // Create and download file
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -281,10 +114,7 @@ const Dashboard = () => {
 
   // Export issues to JSON
   const handleExportJSON = () => {
-    // Create JSON content
     const jsonContent = JSON.stringify(issues, null, 2);
-
-    // Create and download file
     const blob = new Blob([jsonContent], { type: 'application/json' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -304,46 +134,46 @@ const Dashboard = () => {
   };
 
   return (
-    <Container>
+    <div className={styles.container}>
       {/* Header */}
-      <Header>
-        <Title>Issue Tracker Dashboard</Title>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Issue Tracker Dashboard</h1>
 
         {/* Statistics Cards */}
-        <StatsGrid>
-          <StatCard $bgColor="#e0e7ff">
-            <StatValue $color="#4f46e5">
+        <div className={styles.statsGrid}>
+          <Card className={styles.statCard} style={{ background: '#e0e7ff' }}>
+            <div className={styles.statValue} style={{ color: '#4f46e5' }}>
               {statsLoading ? '...' : stats.Open || 0}
-            </StatValue>
-            <StatLabel>Open</StatLabel>
-          </StatCard>
+            </div>
+            <div className={styles.statLabel}>Open</div>
+          </Card>
 
-          <StatCard $bgColor="#fef3c7">
-            <StatValue $color="#d97706">
+          <Card className={styles.statCard} style={{ background: '#fef3c7' }}>
+            <div className={styles.statValue} style={{ color: '#d97706' }}>
               {statsLoading ? '...' : stats.InProgress || 0}
-            </StatValue>
-            <StatLabel>In Progress</StatLabel>
-          </StatCard>
+            </div>
+            <div className={styles.statLabel}>In Progress</div>
+          </Card>
 
-          <StatCard $bgColor="#d1fae5">
-            <StatValue $color="#059669">
+          <Card className={styles.statCard} style={{ background: '#d1fae5' }}>
+            <div className={styles.statValue} style={{ color: '#059669' }}>
               {statsLoading ? '...' : stats.Resolved || 0}
-            </StatValue>
-            <StatLabel>Resolved</StatLabel>
-          </StatCard>
+            </div>
+            <div className={styles.statLabel}>Resolved</div>
+          </Card>
 
-          <StatCard $bgColor="#e5e7eb">
-            <StatValue $color="#6b7280">
+          <Card className={styles.statCard} style={{ background: '#e5e7eb' }}>
+            <div className={styles.statValue} style={{ color: '#6b7280' }}>
               {statsLoading ? '...' : stats.Closed || 0}
-            </StatValue>
-            <StatLabel>Closed</StatLabel>
-          </StatCard>
-        </StatsGrid>
-      </Header>
+            </div>
+            <div className={styles.statLabel}>Closed</div>
+          </Card>
+        </div>
+      </div>
 
       {/* Filters and Search */}
-      <FiltersSection>
-        <FiltersRow>
+      <div className={styles.filtersSection}>
+        <div className={styles.filtersRow}>
           {/* Search input with debouncing */}
           <Input
             placeholder="Search by title or description..."
@@ -382,15 +212,15 @@ const Dashboard = () => {
           <Button variant="ghost" onClick={handleClearFilters}>
             Clear
           </Button>
-        </FiltersRow>
+        </div>
 
-        <ActionsRow>
+        <div className={styles.actionsRow}>
           <Button variant="primary" onClick={handleCreateIssue}>
             + Create Issue
           </Button>
 
           {/* Export buttons */}
-          <ExportButtons>
+          <div className={styles.exportButtons}>
             <Button
               variant="outline"
               size="small"
@@ -407,44 +237,44 @@ const Dashboard = () => {
             >
               Export JSON
             </Button>
-          </ExportButtons>
-        </ActionsRow>
-      </FiltersSection>
+          </div>
+        </div>
+      </div>
 
       {/* Issues List */}
       {loading ? (
         <Loader text="Loading issues..." />
       ) : issues.length === 0 ? (
-        <EmptyState>
+        <div className={styles.emptyState}>
           <h3>No issues found</h3>
           <p>Try adjusting your filters or create a new issue</p>
-        </EmptyState>
+        </div>
       ) : (
         <>
-          <IssuesList>
+          <div className={styles.issuesList}>
             {issues.map((issue) => (
-              <IssueCard key={issue.id} onClick={() => handleIssueClick(issue.id)}>
-                <IssueHeader>
-                  <IssueTitle>#{issue.id} - {issue.title}</IssueTitle>
-                  <IssueBadges>
+              <Card key={issue.id} className={styles.issueCard} onClick={() => handleIssueClick(issue.id)}>
+                <div className={styles.issueHeader}>
+                  <h3 className={styles.issueTitle}>#{issue.id} - {issue.title}</h3>
+                  <div className={styles.issueBadges}>
                     <Badge variant={issue.status}>{issue.status}</Badge>
                     <Badge variant={issue.priority}>{issue.priority}</Badge>
-                  </IssueBadges>
-                </IssueHeader>
+                  </div>
+                </div>
 
-                <IssueDescription>{issue.description}</IssueDescription>
+                <p className={styles.issueDescription}>{issue.description}</p>
 
-                <IssueFooter>
+                <div className={styles.issueFooter}>
                   <span>Created {formatDate(issue.createdAt)}</span>
                   <span>Severity: {issue.severity}</span>
-                </IssueFooter>
-              </IssueCard>
+                </div>
+              </Card>
             ))}
-          </IssuesList>
+          </div>
 
           {/* Pagination */}
           {pagination.totalPages > 1 && (
-            <Pagination>
+            <div className={styles.pagination}>
               <Button
                 variant="ghost"
                 size="small"
@@ -454,9 +284,9 @@ const Dashboard = () => {
                 ← Previous
               </Button>
 
-              <PageInfo>
+              <span className={styles.pageInfo}>
                 Page {pagination.currentPage} of {pagination.totalPages} ({pagination.totalCount} total issues)
-              </PageInfo>
+              </span>
 
               <Button
                 variant="ghost"
@@ -466,11 +296,11 @@ const Dashboard = () => {
               >
                 Next →
               </Button>
-            </Pagination>
+            </div>
           )}
         </>
       )}
-    </Container>
+    </div>
   );
 };
 

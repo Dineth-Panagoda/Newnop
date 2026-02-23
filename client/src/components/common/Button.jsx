@@ -3,138 +3,8 @@
 // ========================================
 // Reusable button component with different variants and sizes
 
-import styled from 'styled-components';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-/**
- * Styled button with dynamic styles based on props
- * Styled-components allows us to write CSS in JavaScript
- * Props are passed to the component and used to determine styles
- */
-const StyledButton = styled.button`
-  /* Base styles */
-  padding: ${props => {
-    // Different padding based on size prop
-    if (props.$size === 'small') return '0.5rem 1rem';
-    if (props.$size === 'large') return '0.875rem 1.75rem';
-    return '0.625rem 1.25rem'; // default (medium)
-  }};
-
-  font-size: ${props => {
-    if (props.$size === 'small') return '0.875rem';
-    if (props.$size === 'large') return '1.125rem';
-    return '1rem';
-  }};
-
-  font-weight: 500;
-  border-radius: var(--radius-md);
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  /* Disabled state */
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  /* Background and text colors based on variant */
-  ${props => {
-    // Primary variant (default)
-    if (props.$variant === 'primary') {
-      return `
-        background-color: var(--primary-color);
-        color: white;
-
-        &:hover:not(:disabled) {
-          background-color: var(--primary-dark);
-        }
-      `;
-    }
-
-    // Secondary variant
-    if (props.$variant === 'secondary') {
-      return `
-        background-color: var(--gray-200);
-        color: var(--gray-800);
-
-        &:hover:not(:disabled) {
-          background-color: var(--gray-300);
-        }
-      `;
-    }
-
-    // Success variant
-    if (props.$variant === 'success') {
-      return `
-        background-color: var(--success-color);
-        color: white;
-
-        &:hover:not(:disabled) {
-          background-color: #059669;
-        }
-      `;
-    }
-
-    // Danger variant
-    if (props.$variant === 'danger') {
-      return `
-        background-color: var(--danger-color);
-        color: white;
-
-        &:hover:not(:disabled) {
-          background-color: #dc2626;
-        }
-      `;
-    }
-
-    // Outline variant
-    if (props.$variant === 'outline') {
-      return `
-        background-color: transparent;
-        color: var(--primary-color);
-        border: 2px solid var(--primary-color);
-
-        &:hover:not(:disabled) {
-          background-color: var(--primary-color);
-          color: white;
-        }
-      `;
-    }
-
-    // Ghost variant (no background)
-    if (props.$variant === 'ghost') {
-      return `
-        background-color: transparent;
-        color: var(--gray-700);
-
-        &:hover:not(:disabled) {
-          background-color: var(--gray-100);
-        }
-      `;
-    }
-
-    // Default to primary if no variant specified
-    return `
-      background-color: var(--primary-color);
-      color: white;
-    `;
-  }}
-
-  /* Full width option */
-  ${props => props.$fullWidth && 'width: 100%;'}
-`;
-
-// ========================================
-// BUTTON COMPONENT
-// ========================================
+import styles from './Button.module.css';
+import classNames from '../../utils/classNames';
 
 /**
  * Button component props:
@@ -154,20 +24,28 @@ const Button = ({
   onClick,
   children,
   type = 'button',
+  className,
   ...rest
 }) => {
+  // Combine class names based on props
+  const buttonClasses = classNames(
+    styles.button,
+    styles[`button-${size}`],
+    styles[`button-${variant}`],
+    fullWidth && styles['button-fullWidth'],
+    className
+  );
+
   return (
-    <StyledButton
-      $variant={variant}      // $ prefix prevents prop from being passed to DOM
-      $size={size}
-      $fullWidth={fullWidth}
+    <button
+      className={buttonClasses}
       disabled={disabled}
       onClick={onClick}
       type={type}
-      {...rest}               // Spread any additional props (className, id, etc.)
+      {...rest}
     >
       {children}
-    </StyledButton>
+    </button>
   );
 };
 

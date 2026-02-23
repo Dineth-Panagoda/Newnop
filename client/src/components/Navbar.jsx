@@ -5,79 +5,9 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styles from './Navbar.module.css';
 import { logout } from '../redux/slices/authSlice';
 import Button from './common/Button';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-const Nav = styled.nav`
-  background-color: white;
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-`;
-
-const NavContainer = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-`;
-
-const Logo = styled(Link)`
-  font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  color: var(--primary-color);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--primary-dark);
-  }
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-lg);
-`;
-
-const NavLink = styled(Link)`
-  color: var(--gray-700);
-  text-decoration: none;
-  font-weight: var(--font-medium);
-  transition: color 0.2s;
-
-  &:hover {
-    color: var(--primary-color);
-  }
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-`;
-
-const UserEmail = styled.span`
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-
-  /* Hide on small screens */
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-// ========================================
-// NAVBAR COMPONENT
-// ========================================
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -96,31 +26,37 @@ const Navbar = () => {
   };
 
   return (
-    <Nav>
-      <NavContainer>
+    <nav className={styles.nav}>
+      <div className={styles.navContainer}>
         {/* Logo */}
-        <Logo to="/dashboard">Issue Tracker</Logo>
+        <Link to="/dashboard" className={styles.logo}>
+          Issue Tracker
+        </Link>
 
         {/* Right side: Nav links and user info */}
-        <UserInfo>
-          <NavLinks>
+        <div className={styles.userInfo}>
+          <div className={styles.navLinks}>
             {/* Link to dashboard */}
-            <NavLink to="/dashboard">Dashboard</NavLink>
+            <Link to="/dashboard" className={styles.navLink}>
+              Dashboard
+            </Link>
 
             {/* Link to create new issue */}
-            <NavLink to="/issues/create">New Issue</NavLink>
-          </NavLinks>
+            <Link to="/issues/create" className={styles.navLink}>
+              New Issue
+            </Link>
+          </div>
 
           {/* Display user email */}
-          {user && <UserEmail>{user.email}</UserEmail>}
+          {user && <span className={styles.userEmail}>{user.email}</span>}
 
           {/* Logout button */}
           <Button variant="ghost" size="small" onClick={handleLogout}>
             Logout
           </Button>
-        </UserInfo>
-      </NavContainer>
-    </Nav>
+        </div>
+      </div>
+    </nav>
   );
 };
 

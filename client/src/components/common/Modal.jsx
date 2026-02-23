@@ -4,121 +4,9 @@
 // Overlay dialog for confirmations, forms, and messages
 
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import styles from './Modal.module.css';
+import classNames from '../../utils/classNames';
 import Button from './Button';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-// Modal overlay (darkened background)
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000; /* Ensure modal appears above everything */
-  padding: var(--spacing-md);
-
-  /* Fade-in animation */
-  animation: fadeIn 0.2s ease;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`;
-
-// Modal container
-const ModalContainer = styled.div`
-  background-color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  max-width: ${props => props.$size === 'small' ? '400px' : props.$size === 'large' ? '800px' : '600px'};
-  width: 100%;
-  max-height: 90vh; /* Limit height to viewport */
-  overflow-y: auto; /* Scroll if content is too long */
-
-  /* Slide-up animation */
-  animation: slideUp 0.3s ease;
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(50px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-`;
-
-// Modal header
-const ModalHeader = styled.div`
-  padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-200);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-// Modal title
-const ModalTitle = styled.h2`
-  margin: 0;
-  font-size: var(--text-2xl);
-  font-weight: var(--font-semibold);
-  color: var(--gray-900);
-`;
-
-// Close button
-const CloseButton = styled.button`
-  background: none;
-  border: none;
-  font-size: var(--text-2xl);
-  color: var(--gray-400);
-  cursor: pointer;
-  padding: 0;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: var(--gray-100);
-    color: var(--gray-600);
-  }
-`;
-
-// Modal body
-const ModalBody = styled.div`
-  padding: var(--spacing-lg);
-`;
-
-// Modal footer
-const ModalFooter = styled.div`
-  padding: var(--spacing-lg);
-  border-top: 1px solid var(--gray-200);
-  display: flex;
-  gap: var(--spacing-sm);
-  justify-content: flex-end;
-`;
-
-// ========================================
-// MODAL COMPONENT
-// ========================================
 
 /**
  * Modal component props:
@@ -140,18 +28,15 @@ const Modal = ({
   showCloseButton = true,
   closeOnOverlayClick = true,
   footer,
+  className,
   ...rest
 }) => {
   // Prevent body scrolling when modal is open
   useEffect(() => {
     if (isOpen) {
-      // Save original overflow value
       const originalOverflow = document.body.style.overflow;
-
-      // Disable scrolling
       document.body.style.overflow = 'hidden';
 
-      // Re-enable scrolling when modal closes or component unmounts
       return () => {
         document.body.style.overflow = originalOverflow;
       };
@@ -167,10 +52,7 @@ const Modal = ({
     };
 
     document.addEventListener('keydown', handleEscape);
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
   // Don't render anything if modal is closed
@@ -178,40 +60,45 @@ const Modal = ({
 
   // Handle overlay click
   const handleOverlayClick = (e) => {
-    // Only close if clicking the overlay itself, not its children
     if (closeOnOverlayClick && e.target === e.currentTarget) {
       onClose();
     }
   };
 
+  const modalClasses = classNames(
+    styles.modalContainer,
+    styles[`modalContainer-${size}`],
+    className
+  );
+
   return (
-    <Overlay onClick={handleOverlayClick}>
-      <ModalContainer $size={size} {...rest}>
+    <div className={styles.overlay} onClick={handleOverlayClick}>
+      <div className={modalClasses} {...rest}>
         {/* Header */}
         {(title || showCloseButton) && (
-          <ModalHeader>
-            {title && <ModalTitle>{title}</ModalTitle>}
+          <div className={styles.modalHeader}>
+            {title && <h2 className={styles.modalTitle}>{title}</h2>}
             {showCloseButton && (
-              <CloseButton onClick={onClose} aria-label="Close modal">
+              <button
+                className={styles.closeButton}
+                onClick={onClose}
+                aria-label="Close modal"
+              >
                 ×
-              </CloseButton>
+              </button>
             )}
-          </ModalHeader>
+          </div>
         )}
 
         {/* Body */}
-        <ModalBody>{children}</ModalBody>
+        <div className={styles.modalBody}>{children}</div>
 
         {/* Footer (if provided) */}
-        {footer && <ModalFooter>{footer}</ModalFooter>}
-      </ModalContainer>
-    </Overlay>
+        {footer && <div className={styles.modalFooter}>{footer}</div>}
+      </div>
+    </div>
   );
 };
-
-// ========================================
-// CONFIRMATION MODAL VARIANT
-// ========================================
 
 /**
  * Pre-configured confirmation modal with confirm/cancel buttons
@@ -234,8 +121,6 @@ export const ConfirmModal = ({
 }) => {
   const handleConfirm = () => {
     onConfirm();
-    // Note: Don't auto-close here - let parent component handle it
-    // This allows for async operations and error handling
   };
 
   return (
@@ -256,7 +141,7 @@ export const ConfirmModal = ({
       }
       {...rest}
     >
-      <p style={{ margin: 0, color: 'var(--gray-700)' }}>{message}</p>
+      <p className={styles.confirmMessage}>{message}</p>
     </Modal>
   );
 };

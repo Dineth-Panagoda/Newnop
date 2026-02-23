@@ -1,0 +1,63 @@
+/* ========================================
+   BADGE COMPONENT STYLES
+   ======================================== */
+
+/* Base badge styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Large size */
+.badge-large {
+  padding: 0.375rem 0.875rem;
+  font-size: var(--text-sm);
+}
+
+/* Status variants */
+.badge-Open {
+  background-color: var(--info-light);
+  color: var(--info-color);
+}
+
+.badge-InProgress {
+  background-color: var(--warning-light);
+  color: var(--warning-color);
+}
+
+.badge-Resolved {
+  background-color: var(--success-light);
+  color: var(--success-color);
+}
+
+.badge-Closed {
+  background-color: var(--gray-200);
+  color: var(--gray-600);
+}
+
+/* Priority/Severity variants */
+.badge-Low {
+  background-color: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.badge-Medium {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-High {
+  background-color: var(--warning-light);
+  color: #c2410c;
+}
+
+.badge-Critical {
+  background-color: var(--danger-light);
+  color: #991b1b;
+}

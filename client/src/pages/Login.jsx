@@ -6,79 +6,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styles from './Login.module.css';
 import { loginUser, clearError } from '../redux/slices/authSlice';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import Card from '../components/common/Card';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-const PageContainer = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-md);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-`;
-
-const LoginCard = styled(Card)`
-  max-width: 440px;
-  width: 100%;
-`;
-
-const Title = styled.h1`
-  margin: 0 0 var(--spacing-sm) 0;
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--gray-900);
-  text-align: center;
-`;
-
-const Subtitle = styled.p`
-  margin: 0 0 var(--spacing-lg) 0;
-  font-size: var(--text-base);
-  color: var(--gray-600);
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-`;
-
-const ErrorAlert = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--danger-light);
-  border: 1px solid var(--danger-color);
-  border-radius: var(--radius-md);
-  color: var(--danger-color);
-  font-size: var(--text-sm);
-`;
-
-const Footer = styled.div`
-  margin-top: var(--spacing-lg);
-  text-align: center;
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-`;
-
-const StyledLink = styled(Link)`
-  color: var(--primary-color);
-  font-weight: var(--font-medium);
-
-  &:hover {
-    color: var(--primary-dark);
-  }
-`;
-
-// ========================================
-// LOGIN COMPONENT
-// ========================================
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -101,7 +33,6 @@ const Login = () => {
   }, [dispatch]);
 
   // Redirect to dashboard if already authenticated
-  // This shouldn't happen due to route protection, but good to have as fallback
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/dashboard');
@@ -112,7 +43,6 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Update form data
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -144,40 +74,34 @@ const Login = () => {
     }
 
     setFormErrors(errors);
-    return Object.keys(errors).length === 0; // Return true if no errors
+    return Object.keys(errors).length === 0;
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
-    // Validate form
     if (!validateForm()) {
       return;
     }
 
-    // Dispatch login action
-    // This is an async thunk that will make API call
     const result = await dispatch(loginUser(formData));
 
-    // Check if login was successful
     if (loginUser.fulfilled.match(result)) {
-      // Login successful - Redux will update state and redirect will happen via useEffect
       navigate('/dashboard');
     }
-    // If login failed, error will be shown from Redux state
   };
 
   return (
-    <PageContainer>
-      <LoginCard>
-        <Title>Welcome Back</Title>
-        <Subtitle>Sign in to your account to continue</Subtitle>
+    <div className={styles.pageContainer}>
+      <Card className={styles.loginCard}>
+        <h1 className={styles.title}>Welcome Back</h1>
+        <p className={styles.subtitle}>Sign in to your account to continue</p>
 
         {/* Show error from API if exists */}
-        {error && <ErrorAlert>{error}</ErrorAlert>}
+        {error && <div className={styles.errorAlert}>{error}</div>}
 
-        <Form onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {/* Email input */}
           <Input
             label="Email"
@@ -211,15 +135,15 @@ const Login = () => {
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </Button>
-        </Form>
+        </form>
 
         {/* Link to register page */}
-        <Footer>
+        <div className={styles.footer}>
           Don't have an account?{' '}
-          <StyledLink to="/register">Create one</StyledLink>
-        </Footer>
-      </LoginCard>
-    </PageContainer>
+          <Link to="/register" className={styles.link}>Create one</Link>
+        </div>
+      </Card>
+    </div>
   );
 };
 

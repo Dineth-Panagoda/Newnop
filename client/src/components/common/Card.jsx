@@ -3,83 +3,8 @@
 // ========================================
 // Container component for displaying content in a card layout
 
-import styled from 'styled-components';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-// Main card container
-const StyledCard = styled.div`
-  background-color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden; /* Ensure rounded corners work with child elements */
-  transition: all 0.2s ease;
-
-  /* Hover effect (optional, enabled with $hoverable prop) */
-  ${props => props.$hoverable && `
-    cursor: pointer;
-
-    &:hover {
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
-    }
-  `}
-
-  /* Padding variant */
-  ${props => {
-    if (props.$padding === 'none') return 'padding: 0;';
-    if (props.$padding === 'small') return 'padding: var(--spacing-md);';
-    if (props.$padding === 'large') return 'padding: var(--spacing-xl);';
-    return 'padding: var(--spacing-lg);'; // default
-  }}
-`;
-
-// Card header section
-const CardHeader = styled.div`
-  padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-200);
-
-  ${props => props.$noPadding && 'padding: 0;'}
-  ${props => props.$noBorder && 'border-bottom: none;'}
-`;
-
-// Card body section
-const CardBody = styled.div`
-  padding: var(--spacing-lg);
-
-  ${props => props.$noPadding && 'padding: 0;'}
-`;
-
-// Card footer section
-const CardFooter = styled.div`
-  padding: var(--spacing-lg);
-  border-top: 1px solid var(--gray-200);
-  background-color: var(--gray-50);
-
-  ${props => props.$noPadding && 'padding: 0;'}
-  ${props => props.$noBorder && 'border-top: none; background-color: transparent;'}
-`;
-
-// Card title
-const CardTitle = styled.h3`
-  margin: 0;
-  font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
-  color: var(--gray-900);
-`;
-
-// Card subtitle
-const CardSubtitle = styled.p`
-  margin: 0.25rem 0 0 0;
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-`;
-
-// ========================================
-// CARD COMPONENT
-// ========================================
+import styles from './Card.module.css';
+import classNames from '../../utils/classNames';
 
 /**
  * Card component props:
@@ -93,17 +18,89 @@ const Card = ({
   hoverable = false,
   padding = 'medium',
   onClick,
+  className,
   ...rest
 }) => {
+  const cardClasses = classNames(
+    styles.card,
+    hoverable && styles['card-hoverable'],
+    padding && styles[`card-${padding}`],
+    className
+  );
+
   return (
-    <StyledCard
-      $hoverable={hoverable}
-      $padding={padding}
-      onClick={onClick}
-      {...rest}
-    >
+    <div className={cardClasses} onClick={onClick} {...rest}>
       {children}
-    </StyledCard>
+    </div>
+  );
+};
+
+// Card Header sub-component
+const CardHeader = ({ children, noPadding, noBorder, className, ...rest }) => {
+  const headerClasses = classNames(
+    styles.cardHeader,
+    noPadding && styles['cardHeader-noPadding'],
+    noBorder && styles['cardHeader-noBorder'],
+    className
+  );
+
+  return (
+    <div className={headerClasses} {...rest}>
+      {children}
+    </div>
+  );
+};
+
+// Card Body sub-component
+const CardBody = ({ children, noPadding, className, ...rest }) => {
+  const bodyClasses = classNames(
+    styles.cardBody,
+    noPadding && styles['cardBody-noPadding'],
+    className
+  );
+
+  return (
+    <div className={bodyClasses} {...rest}>
+      {children}
+    </div>
+  );
+};
+
+// Card Footer sub-component
+const CardFooter = ({ children, noPadding, noBorder, className, ...rest }) => {
+  const footerClasses = classNames(
+    styles.cardFooter,
+    noPadding && styles['cardFooter-noPadding'],
+    noBorder && styles['cardFooter-noBorder'],
+    className
+  );
+
+  return (
+    <div className={footerClasses} {...rest}>
+      {children}
+    </div>
+  );
+};
+
+// Card Title sub-component
+const CardTitle = ({ children, className, ...rest }) => {
+  const titleClasses = classNames(styles.cardTitle, className);
+
+  return (
+    <h3 className={titleClasses} {...rest}>
+      {children}
+    </h3>
+  );
+};
+
+// Card Subtitle sub-component
+const CardSubtitle = ({ children, className, ...rest }) => {
+  const subtitleClasses = classNames(styles.cardSubtitle, className);
+
+  return (
+    <p className={subtitleClasses} {...rest}>
+      {children}
+    </p>
   );
 };
 

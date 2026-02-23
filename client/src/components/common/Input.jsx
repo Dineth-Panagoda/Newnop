@@ -3,129 +3,8 @@
 // ========================================
 // Reusable input field with label, error message, and validation
 
-import styled from 'styled-components';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-// Container for the entire input group
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  width: 100%;
-`;
-
-// Label element
-const Label = styled.label`
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--gray-700);
-
-  /* Show asterisk for required fields */
-  ${props => props.$required && `
-    &::after {
-      content: ' *';
-      color: var(--danger-color);
-    }
-  `}
-`;
-
-// Input field
-const StyledInput = styled.input`
-  padding: 0.625rem 0.875rem;
-  font-size: var(--text-base);
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-  width: 100%;
-
-  /* Focus state */
-  &:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-
-  /* Error state */
-  ${props => props.$hasError && `
-    border-color: var(--danger-color);
-
-    &:focus {
-      border-color: var(--danger-color);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-    }
-  `}
-
-  /* Disabled state */
-  &:disabled {
-    background-color: var(--gray-100);
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  /* Placeholder styling */
-  &::placeholder {
-    color: var(--gray-400);
-  }
-`;
-
-// Textarea variant
-const StyledTextarea = styled.textarea`
-  padding: 0.625rem 0.875rem;
-  font-size: var(--text-base);
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-md);
-  transition: all 0.2s ease;
-  width: 100%;
-  font-family: inherit; /* Use same font as body */
-  resize: vertical; /* Allow vertical resizing only */
-  min-height: 100px;
-
-  &:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  }
-
-  ${props => props.$hasError && `
-    border-color: var(--danger-color);
-
-    &:focus {
-      border-color: var(--danger-color);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-    }
-  `}
-
-  &:disabled {
-    background-color: var(--gray-100);
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
-  &::placeholder {
-    color: var(--gray-400);
-  }
-`;
-
-// Error message text
-const ErrorMessage = styled.span`
-  font-size: var(--text-sm);
-  color: var(--danger-color);
-  margin-top: 0.25rem;
-`;
-
-// Helper text (for additional info)
-const HelperText = styled.span`
-  font-size: var(--text-sm);
-  color: var(--gray-500);
-  margin-top: 0.25rem;
-`;
-
-// ========================================
-// INPUT COMPONENT
-// ========================================
+import styles from './Input.module.css';
+import classNames from '../../utils/classNames';
 
 /**
  * Input component props:
@@ -155,20 +34,33 @@ const Input = ({
   helperText,
   multiline = false,
   rows = 3,
+  className,
   ...rest
 }) => {
+  // Determine input/textarea class names
+  const inputClasses = classNames(
+    multiline ? styles.textarea : styles.input,
+    error && (multiline ? styles['textarea-error'] : styles['input-error']),
+    className
+  );
+
+  const labelClasses = classNames(
+    styles.label,
+    required && styles['label-required']
+  );
+
   return (
-    <InputContainer>
+    <div className={styles.inputContainer}>
       {/* Render label if provided */}
       {label && (
-        <Label htmlFor={name} $required={required}>
+        <label htmlFor={name} className={labelClasses}>
           {label}
-        </Label>
+        </label>
       )}
 
       {/* Render textarea or input based on multiline prop */}
       {multiline ? (
-        <StyledTextarea
+        <textarea
           id={name}
           name={name}
           value={value}
@@ -177,11 +69,11 @@ const Input = ({
           required={required}
           disabled={disabled}
           rows={rows}
-          $hasError={!!error}
+          className={inputClasses}
           {...rest}
         />
       ) : (
-        <StyledInput
+        <input
           type={type}
           id={name}
           name={name}
@@ -190,17 +82,17 @@ const Input = ({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
-          $hasError={!!error}
+          className={inputClasses}
           {...rest}
         />
       )}
 
       {/* Show error message if exists */}
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {error && <span className={styles.errorMessage}>{error}</span>}
 
       {/* Show helper text if exists and no error */}
-      {helperText && !error && <HelperText>{helperText}</HelperText>}
-    </InputContainer>
+      {helperText && !error && <span className={styles.helperText}>{helperText}</span>}
+    </div>
   );
 };
 

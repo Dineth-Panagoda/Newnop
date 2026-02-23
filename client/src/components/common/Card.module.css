@@ -1,0 +1,89 @@
+/* ========================================
+   CARD COMPONENT STYLES
+   ======================================== */
+
+/* Main card container */
+.card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* Hoverable variant */
+.card-hoverable {
+  cursor: pointer;
+}
+
+.card-hoverable:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Padding variants */
+.card-none {
+  padding: 0;
+}
+
+.card-small {
+  padding: var(--spacing-md);
+}
+
+.card-medium {
+  padding: var(--spacing-lg);
+}
+
+.card-large {
+  padding: var(--spacing-xl);
+}
+
+/* Card sub-components */
+.cardHeader {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.cardHeader-noPadding {
+  padding: 0;
+}
+
+.cardHeader-noBorder {
+  border-bottom: none;
+}
+
+.cardBody {
+  padding: var(--spacing-lg);
+}
+
+.cardBody-noPadding {
+  padding: 0;
+}
+
+.cardFooter {
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--gray-200);
+  background-color: var(--gray-50);
+}
+
+.cardFooter-noPadding {
+  padding: 0;
+}
+
+.cardFooter-noBorder {
+  border-top: none;
+  background-color: transparent;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--gray-900);
+}
+
+.cardSubtitle {
+  margin: 0.25rem 0 0 0;
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+}

@@ -1,0 +1,121 @@
+/* ========================================
+   MODAL COMPONENT STYLES
+   ======================================== */
+
+/* Modal overlay (darkened background) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal container */
+.modalContainer {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.modalContainer-small {
+  max-width: 400px;
+}
+
+.modalContainer-medium {
+  max-width: 600px;
+}
+
+.modalContainer-large {
+  max-width: 800px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal header */
+.modalHeader {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Modal title */
+.modalTitle {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  color: var(--gray-900);
+}
+
+/* Close button */
+.closeButton {
+  background: none;
+  border: none;
+  font-size: var(--text-2xl);
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* Modal body */
+.modalBody {
+  padding: var(--spacing-lg);
+}
+
+/* Modal footer */
+.modalFooter {
+  padding: var(--spacing-lg);
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+}
+
+/* Confirmation modal message */
+.confirmMessage {
+  margin: 0;
+  color: var(--gray-700);
+}

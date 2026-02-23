@@ -6,70 +6,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styles from './CreateIssue.module.css';
 import { createIssue } from '../redux/slices/issuesSlice';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import Select from '../components/common/Select';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-md);
-`;
-
-const Title = styled.h1`
-  margin: 0 0 var(--spacing-lg) 0;
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--gray-900);
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-`;
-
-const FormRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: var(--spacing-md);
-  justify-content: flex-end;
-  margin-top: var(--spacing-md);
-`;
-
-const ErrorAlert = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--danger-light);
-  border: 1px solid var(--danger-color);
-  border-radius: var(--radius-md);
-  color: var(--danger-color);
-  font-size: var(--text-sm);
-`;
-
-const SuccessAlert = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--success-light);
-  border: 1px solid var(--success-color);
-  border-radius: var(--radius-md);
-  color: var(--success-color);
-  font-size: var(--text-sm);
-`;
-
-// ========================================
-// CREATE ISSUE COMPONENT
-// ========================================
 
 const CreateIssue = () => {
   const navigate = useNavigate();
@@ -157,7 +99,6 @@ const CreateIssue = () => {
         navigate(`/issues/${result.payload.id}`);
       }, 1000);
     }
-    // If failed, error will be shown from Redux state
   };
 
   // Handle cancel
@@ -166,17 +107,17 @@ const CreateIssue = () => {
   };
 
   return (
-    <Container>
-      <Title>Create New Issue</Title>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Create New Issue</h1>
 
       <Card>
         {/* Show error if exists */}
-        {error && <ErrorAlert>{error}</ErrorAlert>}
+        {error && <div className={styles.errorAlert}>{error}</div>}
 
         {/* Show success message */}
-        {successMessage && <SuccessAlert>{successMessage}</SuccessAlert>}
+        {successMessage && <div className={styles.successAlert}>{successMessage}</div>}
 
-        <Form onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {/* Title input */}
           <Input
             label="Title"
@@ -202,7 +143,7 @@ const CreateIssue = () => {
           />
 
           {/* Status, Priority, and Severity in a row */}
-          <FormRow>
+          <div className={styles.formRow}>
             {/* Status select */}
             <Select
               label="Status"
@@ -247,10 +188,10 @@ const CreateIssue = () => {
               ]}
               required
             />
-          </FormRow>
+          </div>
 
           {/* Action buttons */}
-          <ButtonGroup>
+          <div className={styles.buttonGroup}>
             <Button
               type="button"
               variant="ghost"
@@ -267,10 +208,10 @@ const CreateIssue = () => {
             >
               {actionLoading ? 'Creating...' : 'Create Issue'}
             </Button>
-          </ButtonGroup>
-        </Form>
+          </div>
+        </form>
       </Card>
-    </Container>
+    </div>
   );
 };
 

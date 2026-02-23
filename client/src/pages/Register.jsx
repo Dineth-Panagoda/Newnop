@@ -6,79 +6,11 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styles from './Register.module.css';
 import { registerUser, clearError } from '../redux/slices/authSlice';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import Card from '../components/common/Card';
-
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-const PageContainer = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-md);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-`;
-
-const RegisterCard = styled(Card)`
-  max-width: 440px;
-  width: 100%;
-`;
-
-const Title = styled.h1`
-  margin: 0 0 var(--spacing-sm) 0;
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--gray-900);
-  text-align: center;
-`;
-
-const Subtitle = styled.p`
-  margin: 0 0 var(--spacing-lg) 0;
-  font-size: var(--text-base);
-  color: var(--gray-600);
-  text-align: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-`;
-
-const ErrorAlert = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--danger-light);
-  border: 1px solid var(--danger-color);
-  border-radius: var(--radius-md);
-  color: var(--danger-color);
-  font-size: var(--text-sm);
-`;
-
-const Footer = styled.div`
-  margin-top: var(--spacing-lg);
-  text-align: center;
-  font-size: var(--text-sm);
-  color: var(--gray-600);
-`;
-
-const StyledLink = styled(Link)`
-  color: var(--primary-color);
-  font-weight: var(--font-medium);
-
-  &:hover {
-    color: var(--primary-dark);
-  }
-`;
-
-// ========================================
-// REGISTER COMPONENT
-// ========================================
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -165,7 +97,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form
     if (!validateForm()) {
       return;
     }
@@ -173,27 +104,23 @@ const Register = () => {
     // Prepare data (don't send confirmPassword to API)
     const { confirmPassword, ...userData } = formData;
 
-    // Dispatch register action
     const result = await dispatch(registerUser(userData));
 
-    // Check if registration was successful
     if (registerUser.fulfilled.match(result)) {
-      // Registration successful - redirect to dashboard
       navigate('/dashboard');
     }
-    // If registration failed, error will be shown from Redux state
   };
 
   return (
-    <PageContainer>
-      <RegisterCard>
-        <Title>Create Account</Title>
-        <Subtitle>Sign up to start tracking issues</Subtitle>
+    <div className={styles.pageContainer}>
+      <Card className={styles.registerCard}>
+        <h1 className={styles.title}>Create Account</h1>
+        <p className={styles.subtitle}>Sign up to start tracking issues</p>
 
         {/* Show error from API if exists */}
-        {error && <ErrorAlert>{error}</ErrorAlert>}
+        {error && <div className={styles.errorAlert}>{error}</div>}
 
-        <Form onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           {/* Name input (optional) */}
           <Input
             label="Name"
@@ -251,15 +178,15 @@ const Register = () => {
           >
             {loading ? 'Creating account...' : 'Create Account'}
           </Button>
-        </Form>
+        </form>
 
         {/* Link to login page */}
-        <Footer>
+        <div className={styles.footer}>
           Already have an account?{' '}
-          <StyledLink to="/login">Sign in</StyledLink>
-        </Footer>
-      </RegisterCard>
-    </PageContainer>
+          <Link to="/login" className={styles.link}>Sign in</Link>
+        </div>
+      </Card>
+    </div>
   );
 };
 

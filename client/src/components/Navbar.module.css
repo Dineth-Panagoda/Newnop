@@ -1,0 +1,74 @@
+/* ========================================
+   NAVBAR COMPONENT STYLES
+   ======================================== */
+
+/* Main nav container */
+.nav {
+  background-color: white;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Inner container */
+.navContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+/* Logo */
+.logo {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: var(--primary-dark);
+}
+
+/* Navigation links container */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+/* Individual nav link */
+.navLink {
+  color: var(--gray-700);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: var(--primary-color);
+}
+
+/* User info section */
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+/* User email */
+.userEmail {
+  font-size: var(--text-sm);
+  color: var(--gray-600);
+}
+
+/* Hide on small screens */
+@media (max-width: 768px) {
+  .userEmail {
+    display: none;
+  }
+}

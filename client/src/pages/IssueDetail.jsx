@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styles from './IssueDetail.module.css';
 import {
   fetchIssueById,
   updateIssue,
@@ -21,132 +21,8 @@ import Badge from '../components/common/Badge';
 import Loader from '../components/common/Loader';
 import { ConfirmModal } from '../components/common/Modal';
 
-// ========================================
-// STYLED COMPONENTS
-// ========================================
-
-const Container = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-md);
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--spacing-lg);
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-`;
-
-const HeaderLeft = styled.div`
-  flex: 1;
-`;
-
-const Title = styled.h1`
-  margin: 0 0 var(--spacing-sm) 0;
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--gray-900);
-`;
-
-const IssueId = styled.span`
-  color: var(--gray-500);
-  font-size: var(--text-lg);
-  font-weight: var(--font-normal);
-`;
-
-const Badges = styled.div`
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-wrap: wrap;
-`;
-
-const HeaderActions = styled.div`
-  display: flex;
-  gap: var(--spacing-sm);
-  align-items: center;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-`;
-
-const FormRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-`;
-
-const Metadata = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--gray-50);
-  border-radius: var(--radius-md);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-  font-size: var(--text-sm);
-`;
-
-const MetadataItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-`;
-
-const MetadataLabel = styled.span`
-  color: var(--gray-500);
-  font-weight: var(--font-medium);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: var(--text-xs);
-`;
-
-const MetadataValue = styled.span`
-  color: var(--gray-900);
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: var(--spacing-md);
-  justify-content: space-between;
-  margin-top: var(--spacing-md);
-`;
-
-const LeftButtons = styled.div`
-  display: flex;
-  gap: var(--spacing-sm);
-`;
-
-const ErrorAlert = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--danger-light);
-  border: 1px solid var(--danger-color);
-  border-radius: var(--radius-md);
-  color: var(--danger-color);
-  font-size: var(--text-sm);
-  margin-bottom: var(--spacing-md);
-`;
-
-const SuccessAlert = styled.div`
-  padding: var(--spacing-md);
-  background-color: var(--success-light);
-  border: 1px solid var(--success-color);
-  border-radius: var(--radius-md);
-  color: var(--success-color);
-  font-size: var(--text-sm);
-  margin-bottom: var(--spacing-md);
-`;
-
-// ========================================
-// ISSUE DETAIL COMPONENT
-// ========================================
-
 const IssueDetail = () => {
-  const { id } = useParams(); // Get issue ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -176,7 +52,6 @@ const IssueDetail = () => {
   useEffect(() => {
     dispatch(fetchIssueById(id));
 
-    // Cleanup: Clear current issue when component unmounts
     return () => {
       dispatch(clearCurrentIssue());
     };
@@ -204,7 +79,6 @@ const IssueDetail = () => {
       [name]: value
     }));
 
-    // Clear field error
     if (formErrors[name]) {
       setFormErrors(prev => ({
         ...prev,
@@ -212,7 +86,6 @@ const IssueDetail = () => {
       }));
     }
 
-    // Clear success message
     if (successMessage) {
       setSuccessMessage('');
     }
@@ -251,15 +124,12 @@ const IssueDetail = () => {
     if (updateIssue.fulfilled.match(result)) {
       setSuccessMessage('Issue updated successfully!');
       setIsEditing(false);
-
-      // Refetch issue statistics
       dispatch(fetchIssueById(id));
     }
   };
 
   // Handle cancel edit
   const handleCancelEdit = () => {
-    // Reset form data to original issue data
     if (currentIssue) {
       setFormData({
         title: currentIssue.title,
@@ -304,7 +174,6 @@ const IssueDetail = () => {
     const result = await dispatch(deleteIssue(id));
 
     if (deleteIssue.fulfilled.match(result)) {
-      // Redirect to dashboard after successful deletion
       navigate('/dashboard');
     }
   };
@@ -329,22 +198,22 @@ const IssueDetail = () => {
   // Show error if issue not found
   if (!currentIssue && !loading) {
     return (
-      <Container>
-        <ErrorAlert>Issue not found</ErrorAlert>
+      <div className={styles.container}>
+        <div className={styles.errorAlert}>Issue not found</div>
         <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
-      </Container>
+      </div>
     );
   }
 
   return (
-    <Container>
+    <div className={styles.container}>
       {/* Header */}
-      <Header>
-        <HeaderLeft>
-          <Title>
-            <IssueId>#{currentIssue.id}</IssueId> {currentIssue.title}
-          </Title>
-          <Badges>
+      <div className={styles.header}>
+        <div className={styles.headerLeft}>
+          <h1 className={styles.title}>
+            <span className={styles.issueId}>#{currentIssue.id}</span> {currentIssue.title}
+          </h1>
+          <div className={styles.badges}>
             <Badge variant={currentIssue.status} size="large">
               {currentIssue.status}
             </Badge>
@@ -354,10 +223,10 @@ const IssueDetail = () => {
             <Badge variant={currentIssue.severity} size="large">
               Severity: {currentIssue.severity}
             </Badge>
-          </Badges>
-        </HeaderLeft>
+          </div>
+        </div>
 
-        <HeaderActions>
+        <div className={styles.headerActions}>
           <Button variant="ghost" size="small" onClick={() => navigate('/dashboard')}>
             ← Back
           </Button>
@@ -367,19 +236,19 @@ const IssueDetail = () => {
               Edit
             </Button>
           )}
-        </HeaderActions>
-      </Header>
+        </div>
+      </div>
 
       <Card>
         {/* Show error */}
-        {error && <ErrorAlert>{error}</ErrorAlert>}
+        {error && <div className={styles.errorAlert}>{error}</div>}
 
         {/* Show success message */}
-        {successMessage && <SuccessAlert>{successMessage}</SuccessAlert>}
+        {successMessage && <div className={styles.successAlert}>{successMessage}</div>}
 
         {isEditing ? (
           // Edit mode
-          <Form onSubmit={handleSave}>
+          <form className={styles.form} onSubmit={handleSave}>
             <Input
               label="Title"
               name="title"
@@ -400,7 +269,7 @@ const IssueDetail = () => {
               required
             />
 
-            <FormRow>
+            <div className={styles.formRow}>
               <Select
                 label="Status"
                 name="status"
@@ -427,9 +296,9 @@ const IssueDetail = () => {
                 options={['Low', 'Medium', 'High', 'Critical']}
                 required
               />
-            </FormRow>
+            </div>
 
-            <ButtonGroup>
+            <div className={styles.buttonGroup}>
               <Button
                 type="button"
                 variant="danger"
@@ -439,7 +308,7 @@ const IssueDetail = () => {
                 Delete Issue
               </Button>
 
-              <LeftButtons>
+              <div className={styles.leftButtons}>
                 <Button
                   type="button"
                   variant="ghost"
@@ -452,9 +321,9 @@ const IssueDetail = () => {
                 <Button type="submit" variant="primary" disabled={actionLoading}>
                   {actionLoading ? 'Saving...' : 'Save Changes'}
                 </Button>
-              </LeftButtons>
-            </ButtonGroup>
-          </Form>
+              </div>
+            </div>
+          </form>
         ) : (
           // View mode
           <>
@@ -467,25 +336,25 @@ const IssueDetail = () => {
               </p>
             </div>
 
-            <Metadata>
-              <MetadataItem>
-                <MetadataLabel>Created</MetadataLabel>
-                <MetadataValue>{formatDate(currentIssue.createdAt)}</MetadataValue>
-              </MetadataItem>
+            <div className={styles.metadata}>
+              <div className={styles.metadataItem}>
+                <span className={styles.metadataLabel}>Created</span>
+                <span className={styles.metadataValue}>{formatDate(currentIssue.createdAt)}</span>
+              </div>
 
-              <MetadataItem>
-                <MetadataLabel>Last Updated</MetadataLabel>
-                <MetadataValue>{formatDate(currentIssue.updatedAt)}</MetadataValue>
-              </MetadataItem>
+              <div className={styles.metadataItem}>
+                <span className={styles.metadataLabel}>Last Updated</span>
+                <span className={styles.metadataValue}>{formatDate(currentIssue.updatedAt)}</span>
+              </div>
 
-              <MetadataItem>
-                <MetadataLabel>Created By</MetadataLabel>
-                <MetadataValue>{currentIssue.user?.email || 'Unknown'}</MetadataValue>
-              </MetadataItem>
-            </Metadata>
+              <div className={styles.metadataItem}>
+                <span className={styles.metadataLabel}>Created By</span>
+                <span className={styles.metadataValue}>{currentIssue.user?.email || 'Unknown'}</span>
+              </div>
+            </div>
 
-            <ButtonGroup style={{ marginTop: 'var(--spacing-xl)' }}>
-              <LeftButtons>
+            <div className={styles.buttonGroup} style={{ marginTop: 'var(--spacing-xl)' }}>
+              <div className={styles.leftButtons}>
                 {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
                   <Button
                     variant="success"
@@ -503,7 +372,7 @@ const IssueDetail = () => {
                     Mark as Closed
                   </Button>
                 )}
-              </LeftButtons>
+              </div>
 
               <Button
                 variant="danger"
@@ -511,7 +380,7 @@ const IssueDetail = () => {
               >
                 Delete Issue
               </Button>
-            </ButtonGroup>
+            </div>
           </>
         )}
       </Card>
@@ -549,7 +418,7 @@ const IssueDetail = () => {
         onConfirm={handleDelete}
         loading={actionLoading}
       />
-    </Container>
+    </div>
   );
 };
 
