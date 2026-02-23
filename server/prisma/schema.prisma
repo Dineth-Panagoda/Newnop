@@ -1,0 +1,91 @@
+// This is your Prisma schema file
+// Prisma is an ORM (Object-Relational Mapping) tool that makes database operations easier
+// Learn more about Prisma: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Database connection configuration
+// The DATABASE_URL environment variable will be loaded from .env file
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - represents users in the system
+// Each user can create multiple issues (one-to-many relationship)
+model User {
+  id        Int      @id @default(autoincrement()) // Primary key, auto-incremented
+  email     String   @unique // Email must be unique across all users
+  password  String   // Hashed password (we'll use bcrypt to hash it)
+  name      String?  // Optional: User's display name
+  createdAt DateTime @default(now()) // Timestamp when user registered
+  updatedAt DateTime @updatedAt // Auto-updated timestamp on any change
+
+  // Relationship: One user can create many issues
+  // This creates a virtual field 'issues' to access all issues created by this user
+  issues    Issue[]
+}
+
+// Issue model - represents bug reports/issues in the system
+// Each issue belongs to one user (the creator)
+model Issue {
+  id          Int      @id @default(autoincrement()) // Primary key, auto-incremented
+  title       String   // Issue title (required)
+  description String   @db.Text // Detailed description (TEXT type for longer content)
+
+  // Status enum: tracks the lifecycle of an issue
+  // Default status is 'Open' when a new issue is created
+  status      Status   @default(Open)
+
+  // Priority enum: indicates how urgent the issue is
+  // Default priority is 'Medium' if not specified
+  priority    Priority @default(Medium)
+
+  // Severity enum: indicates how critical the issue is
+  // This is an optional field mentioned in the requirements
+  severity    Severity @default(Medium)
+
+  // Foreign key relationship to User
+  userId      Int      // ID of the user who created this issue
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // onDelete: Cascade means if a user is deleted, all their issues are also deleted
+
+  createdAt   DateTime @default(now()) // Timestamp when issue was created
+  updatedAt   DateTime @updatedAt // Auto-updated timestamp on any change
+
+  // Index on userId for faster queries when filtering issues by user
+  @@index([userId])
+  // Index on status for faster queries when filtering by status (common operation)
+  @@index([status])
+  // Composite index for common query patterns (filtering by status and priority)
+  @@index([status, priority])
+}
+
+// Enum for issue status
+// These are the different states an issue can be in during its lifecycle
+enum Status {
+  Open        // Issue is newly created and not being worked on
+  InProgress  // Issue is currently being worked on
+  Resolved    // Issue has been fixed/resolved
+  Closed      // Issue is closed (either resolved or won't fix)
+}
+
+// Enum for issue priority
+// Indicates how soon the issue should be addressed
+enum Priority {
+  Low      // Can be addressed later
+  Medium   // Normal priority
+  High     // Should be addressed soon
+  Critical // Must be addressed immediately
+}
+
+// Enum for issue severity
+// Indicates the impact/seriousness of the issue
+enum Severity {
+  Low      // Minor issue, little impact
+  Medium   // Moderate impact
+  High     // Significant impact
+  Critical // Severe impact, system-breaking
+}
