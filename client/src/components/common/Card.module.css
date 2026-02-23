@@ -5,11 +5,11 @@
 /* Main card container */
 .card {
   background-color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: all var(--transition-base);
-  border: 1px solid var(--gray-100);
+  transition: all 200ms ease-in-out;
+  border: 1px solid #F5F5F5;
 }
 
 /* Hoverable variant */
@@ -18,9 +18,9 @@
 }
 
 .card-hoverable:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
   transform: translateY(-2px);
-  border-color: var(--gray-200);
+  border-color: #EEEEEE;
 }
 
 /* Padding variants */
@@ -29,21 +29,21 @@
 }
 
 .card-small {
-  padding: var(--spacing-md);
+  padding: 1rem;
 }
 
 .card-medium {
-  padding: var(--spacing-lg);
+  padding: 1.5rem;
 }
 
 .card-large {
-  padding: var(--spacing-xl);
+  padding: 2rem;
 }
 
 /* Card sub-components */
 .cardHeader {
-  padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-100);
+  padding: 1.5rem;
+  border-bottom: 1px solid #F5F5F5;
 }
 
 .cardHeader-noPadding {
@@ -55,7 +55,7 @@
 }
 
 .cardBody {
-  padding: var(--spacing-lg);
+  padding: 1.5rem;
 }
 
 .cardBody-noPadding {
@@ -63,9 +63,9 @@
 }
 
 .cardFooter {
-  padding: var(--spacing-lg);
-  border-top: 1px solid var(--gray-100);
-  background-color: var(--gray-50);
+  padding: 1.5rem;
+  border-top: 1px solid #F5F5F5;
+  background-color: #FAFAFA;
 }
 
 .cardFooter-noPadding {
@@ -79,13 +79,13 @@
 
 .cardTitle {
   margin: 0;
-  font-size: var(--text-xl);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212121;
 }
 
 .cardSubtitle {
   margin: 0.25rem 0 0 0;
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: 0.875rem;
+  color: #616161;
 }

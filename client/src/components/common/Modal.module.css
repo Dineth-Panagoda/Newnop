@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: var(--spacing-md);
+  padding: 1rem;
   animation: fadeIn 0.2s ease;
 }
 
@@ -30,8 +30,8 @@
 /* Modal container */
 .modalContainer {
   background-color: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -63,8 +63,8 @@
 
 /* Modal header */
 .modalHeader {
-  padding: var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-200);
+  padding: 1.5rem;
+  border-bottom: 1px solid #EEEEEE;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -73,17 +73,17 @@
 /* Modal title */
 .modalTitle {
   margin: 0;
-  font-size: var(--text-2xl);
-  font-weight: var(--font-semibold);
-  color: var(--gray-900);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212121;
 }
 
 /* Close button */
 .closeButton {
   background: none;
   border: none;
-  font-size: var(--text-2xl);
-  color: var(--gray-400);
+  font-size: 1.5rem;
+  color: #BDBDBD;
   cursor: pointer;
   padding: 0;
   width: 32px;
@@ -91,31 +91,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
+  border-radius: 0.5rem;
   transition: all 0.2s ease;
 }
 
 .closeButton:hover {
-  background-color: var(--gray-100);
-  color: var(--gray-600);
+  background-color: #F5F5F5;
+  color: #757575;
 }
 
 /* Modal body */
 .modalBody {
-  padding: var(--spacing-lg);
+  padding: 1.5rem;
 }
 
 /* Modal footer */
 .modalFooter {
-  padding: var(--spacing-lg);
-  border-top: 1px solid var(--gray-200);
+  padding: 1.5rem;
+  border-top: 1px solid #EEEEEE;
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 0.5rem;
   justify-content: flex-end;
 }
 
 /* Confirmation modal message */
 .confirmMessage {
   margin: 0;
-  color: var(--gray-700);
+  color: #616161;
 }

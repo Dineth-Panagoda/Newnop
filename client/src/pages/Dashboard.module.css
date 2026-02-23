@@ -5,34 +5,34 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-xl) var(--spacing-md);
+  padding: 2rem 1rem;
 }
 
 .header {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 2rem;
 }
 
 .title {
-  margin: 0 0 var(--spacing-lg) 0;
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--text-primary);
+  margin: 0 0 1.5rem 0;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #212121;
 }
 
 /* Statistics Grid - ACRu Style */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-2xl);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .statCard {
   text-align: center;
   position: relative;
-  padding: var(--spacing-xl) var(--spacing-lg) !important;
+  padding: 2rem 1.5rem !important;
   background: white !important;
-  border: 1px solid var(--gray-100);
+  border: 1px solid #F5F5F5;
 }
 
 /* Accent border on top of stat cards */
@@ -43,37 +43,37 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: var(--primary-color);
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: #76FF03;
+  border-radius: 0.75rem 0.75rem 0 0;
 }
 
 .statValue {
-  font-size: var(--text-4xl);
-  font-weight: var(--font-bold);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-sm);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 0.5rem;
 }
 
 .statLabel {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: 0.875rem;
+  color: #616161;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: var(--font-medium);
+  font-weight: 500;
 }
 
 /* Filters Section */
 .filtersSection {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 1rem;
 }
 
 .filtersRow {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr auto;
-  gap: var(--spacing-md);
+  gap: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -84,7 +84,7 @@
 
 .actionsRow {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
@@ -92,55 +92,55 @@
 
 .exportButtons {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 0.5rem;
 }
 
 /* Issues List */
 .issuesList {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 1rem;
 }
 
 .issueCard {
   cursor: pointer;
-  transition: all var(--transition-base);
-  border: 1px solid var(--gray-100);
+  transition: all 200ms ease-in-out;
+  border: 1px solid #F5F5F5;
 }
 
 .issueCard:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  border-color: #76FF03;
 }
 
 .issueHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--spacing-sm);
-  gap: var(--spacing-md);
+  margin-bottom: 0.5rem;
+  gap: 1rem;
 }
 
 .issueTitle {
   margin: 0;
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #212121;
   flex: 1;
 }
 
 .issueBadges {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 0.5rem;
   flex-wrap: wrap;
   flex-shrink: 0;
 }
 
 .issueDescription {
-  margin: var(--spacing-sm) 0;
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
+  margin: 0.5rem 0;
+  color: #616161;
+  font-size: 0.875rem;
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -152,11 +152,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: var(--spacing-md);
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--gray-100);
-  font-size: var(--text-sm);
-  color: var(--text-tertiary);
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #F5F5F5;
+  font-size: 0.875rem;
+  color: #9E9E9E;
 }
 
 /* Pagination */
@@ -164,24 +164,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--spacing-lg);
-  margin-top: var(--spacing-2xl);
+  gap: 1.5rem;
+  margin-top: 3rem;
 }
 
 .pageInfo {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  font-weight: var(--font-medium);
+  font-size: 0.875rem;
+  color: #616161;
+  font-weight: 500;
 }
 
 /* Empty State */
 .emptyState {
   text-align: center;
-  padding: var(--spacing-3xl) var(--spacing-xl);
-  color: var(--text-tertiary);
+  padding: 4rem 2rem;
+  color: #9E9E9E;
 }
 
 .emptyState h3 {
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-sm);
+  color: #616161;
+  margin-bottom: 0.5rem;
 }

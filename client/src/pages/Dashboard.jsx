@@ -137,7 +137,7 @@ const Dashboard = () => {
     <div className={styles.container}>
       {/* Header */}
       <div className={styles.header}>
-        <h1 className={styles.title}>Issue Tracker Dashboard</h1>
+        <h1 className={styles.title}>Dashboard</h1>
 
         {/* Statistics Cards */}
         <div className={styles.statsGrid}>

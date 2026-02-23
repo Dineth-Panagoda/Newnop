@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xl);
+  padding: 2rem;
   width: 100%;
 }
 
@@ -23,8 +23,8 @@
 
 /* Spinner animation */
 .spinner {
-  border: 3px solid var(--gray-200);
-  border-top: 3px solid var(--primary-color);
+  border: 3px solid #EEEEEE;
+  border-top: 3px solid #76FF03;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -55,7 +55,7 @@
 
 /* Loading text */
 .loadingText {
-  margin-left: var(--spacing-md);
-  font-size: var(--text-base);
-  color: var(--gray-600);
+  margin-left: 1rem;
+  font-size: 1rem;
+  color: #757575;
 }

@@ -4,22 +4,22 @@
 
 /* Base button styles */
 .button {
-  font-weight: var(--font-semibold);
-  border-radius: var(--radius-lg);
+  font-weight: 600;
+  border-radius: 0.75rem;
   border: none;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 200ms ease-in-out;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   font-family: inherit;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
 .button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
 }
 
 .button:active:not(:disabled) {
@@ -37,42 +37,42 @@
 /* Size variants */
 .button-small {
   padding: 0.5rem 1rem;
-  font-size: var(--text-sm);
+  font-size: 0.875rem;
 }
 
 .button-medium {
   padding: 0.625rem 1.5rem;
-  font-size: var(--text-base);
+  font-size: 1rem;
 }
 
 .button-large {
   padding: 0.875rem 2rem;
-  font-size: var(--text-lg);
+  font-size: 1.125rem;
 }
 
 /* Color variants - Primary (Lime Green) */
 .button-primary {
-  background-color: var(--primary-color);
-  color: var(--text-primary);
+  background-color: #76FF03;
+  color: #212121;
 }
 
 .button-primary:hover:not(:disabled) {
-  background-color: var(--primary-dark);
+  background-color: #64DD17;
 }
 
 /* Color variants - Secondary */
 .button-secondary {
-  background-color: var(--gray-200);
-  color: var(--text-primary);
+  background-color: #EEEEEE;
+  color: #212121;
 }
 
 .button-secondary:hover:not(:disabled) {
-  background-color: var(--gray-300);
+  background-color: #E0E0E0;
 }
 
 /* Color variants - Success (Green) */
 .button-success {
-  background-color: var(--success-color);
+  background-color: #00C853;
   color: white;
 }
 
@@ -82,7 +82,7 @@
 
 /* Color variants - Danger (Red) */
 .button-danger {
-  background-color: var(--danger-color);
+  background-color: #FF1744;
   color: white;
 }
 
@@ -93,26 +93,26 @@
 /* Color variants - Outline */
 .button-outline {
   background-color: transparent;
-  color: var(--text-primary);
-  border: 2px solid var(--gray-300);
+  color: #212121;
+  border: 2px solid #E0E0E0;
   box-shadow: none;
 }
 
 .button-outline:hover:not(:disabled) {
-  background-color: var(--gray-50);
-  border-color: var(--primary-color);
+  background-color: #FAFAFA;
+  border-color: #76FF03;
 }
 
 /* Color variants - Ghost (No background, minimal) */
 .button-ghost {
   background-color: transparent;
-  color: var(--text-secondary);
+  color: #616161;
   box-shadow: none;
 }
 
 .button-ghost:hover:not(:disabled) {
-  background-color: var(--gray-100);
-  color: var(--text-primary);
+  background-color: #F5F5F5;
+  color: #212121;
 }
 
 /* Full width modifier */
