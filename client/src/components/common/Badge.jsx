@@ -4,7 +4,7 @@
 // Visual indicator for status, priority, and severity
 // Shows different colors based on the variant
 
-import styles from './Badge.module.css';
+import './Badge.css';
 import classNames from '../../utils/classNames';
 
 /**
@@ -21,9 +21,9 @@ const Badge = ({
   ...rest
 }) => {
   const badgeClasses = classNames(
-    styles.badge,
-    variant && styles[`badge-${variant}`],
-    size === 'large' && styles['badge-large'],
+    "badge",
+    variant && `badge-${variant}`,
+    size === 'large' && 'badge-large',
     className
   );
 

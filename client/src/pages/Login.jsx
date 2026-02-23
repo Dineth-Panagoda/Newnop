@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './Login.module.css';
+import './Login.css';
 import { loginUser, clearError } from '../redux/slices/authSlice';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
@@ -93,15 +93,15 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <Card className={styles.loginCard}>
-        <h1 className={styles.title}>Welcome Back</h1>
-        <p className={styles.subtitle}>Sign in to your account to continue</p>
+    <div className="pageContainer">
+      <Card className="loginCard">
+        <h1 className="title">Welcome Back</h1>
+        <p className="subtitle">Sign in to your account to continue</p>
 
         {/* Show error from API if exists */}
-        {error && <div className={styles.errorAlert}>{error}</div>}
+        {error && <div className="errorAlert">{error}</div>}
 
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           {/* Email input */}
           <Input
             label="Email"
@@ -138,9 +138,9 @@ const Login = () => {
         </form>
 
         {/* Link to register page */}
-        <div className={styles.footer}>
+        <div className="footer">
           Don't have an account?{' '}
-          <Link to="/register" className={styles.link}>Create one</Link>
+          <Link to="/register" className="link">Create one</Link>
         </div>
       </Card>
     </div>

@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './Register.module.css';
+import './Register.css';
 import { registerUser, clearError } from '../redux/slices/authSlice';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
@@ -112,15 +112,15 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <Card className={styles.registerCard}>
-        <h1 className={styles.title}>Create Account</h1>
-        <p className={styles.subtitle}>Sign up to start tracking issues</p>
+    <div className="pageContainer">
+      <Card className="registerCard">
+        <h1 className="title">Create Account</h1>
+        <p className="subtitle">Sign up to start tracking issues</p>
 
         {/* Show error from API if exists */}
-        {error && <div className={styles.errorAlert}>{error}</div>}
+        {error && <div className="errorAlert">{error}</div>}
 
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           {/* Name input (optional) */}
           <Input
             label="Name"
@@ -181,9 +181,9 @@ const Register = () => {
         </form>
 
         {/* Link to login page */}
-        <div className={styles.footer}>
+        <div className="footer">
           Already have an account?{' '}
-          <Link to="/login" className={styles.link}>Sign in</Link>
+          <Link to="/login" className="link">Sign in</Link>
         </div>
       </Card>
     </div>

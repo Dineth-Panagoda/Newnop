@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './IssueDetail.module.css';
+import './IssueDetail.css';
 import {
   fetchIssueById,
   updateIssue,
@@ -198,22 +198,22 @@ const IssueDetail = () => {
   // Show error if issue not found
   if (!currentIssue && !loading) {
     return (
-      <div className={styles.container}>
-        <div className={styles.errorAlert}>Issue not found</div>
+      <div className="container">
+        <div className="errorAlert">Issue not found</div>
         <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
       </div>
     );
   }
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       {/* Header */}
-      <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <h1 className={styles.title}>
-            <span className={styles.issueId}>#{currentIssue.id}</span> {currentIssue.title}
+      <div className="header">
+        <div className="headerLeft">
+          <h1 className="title">
+            <span className="issueId">#{currentIssue.id}</span> {currentIssue.title}
           </h1>
-          <div className={styles.badges}>
+          <div className="badges">
             <Badge variant={currentIssue.status} size="large">
               {currentIssue.status}
             </Badge>
@@ -226,7 +226,7 @@ const IssueDetail = () => {
           </div>
         </div>
 
-        <div className={styles.headerActions}>
+        <div className="headerActions">
           <Button variant="ghost" size="small" onClick={() => navigate('/dashboard')}>
             ← Back
           </Button>
@@ -241,14 +241,14 @@ const IssueDetail = () => {
 
       <Card>
         {/* Show error */}
-        {error && <div className={styles.errorAlert}>{error}</div>}
+        {error && <div className="errorAlert">{error}</div>}
 
         {/* Show success message */}
-        {successMessage && <div className={styles.successAlert}>{successMessage}</div>}
+        {successMessage && <div className="successAlert">{successMessage}</div>}
 
         {isEditing ? (
           // Edit mode
-          <form className={styles.form} onSubmit={handleSave}>
+          <form className="form" onSubmit={handleSave}>
             <Input
               label="Title"
               name="title"
@@ -269,7 +269,7 @@ const IssueDetail = () => {
               required
             />
 
-            <div className={styles.formRow}>
+            <div className="formRow">
               <Select
                 label="Status"
                 name="status"
@@ -298,7 +298,7 @@ const IssueDetail = () => {
               />
             </div>
 
-            <div className={styles.buttonGroup}>
+            <div className="buttonGroup">
               <Button
                 type="button"
                 variant="danger"
@@ -308,7 +308,7 @@ const IssueDetail = () => {
                 Delete Issue
               </Button>
 
-              <div className={styles.leftButtons}>
+              <div className="leftButtons">
                 <Button
                   type="button"
                   variant="ghost"
@@ -336,25 +336,25 @@ const IssueDetail = () => {
               </p>
             </div>
 
-            <div className={styles.metadata}>
-              <div className={styles.metadataItem}>
-                <span className={styles.metadataLabel}>Created</span>
-                <span className={styles.metadataValue}>{formatDate(currentIssue.createdAt)}</span>
+            <div className="metadata">
+              <div className="metadataItem">
+                <span className="metadataLabel">Created</span>
+                <span className="metadataValue">{formatDate(currentIssue.createdAt)}</span>
               </div>
 
-              <div className={styles.metadataItem}>
-                <span className={styles.metadataLabel}>Last Updated</span>
-                <span className={styles.metadataValue}>{formatDate(currentIssue.updatedAt)}</span>
+              <div className="metadataItem">
+                <span className="metadataLabel">Last Updated</span>
+                <span className="metadataValue">{formatDate(currentIssue.updatedAt)}</span>
               </div>
 
-              <div className={styles.metadataItem}>
-                <span className={styles.metadataLabel}>Created By</span>
-                <span className={styles.metadataValue}>{currentIssue.user?.email || 'Unknown'}</span>
+              <div className="metadataItem">
+                <span className="metadataLabel">Created By</span>
+                <span className="metadataValue">{currentIssue.user?.email || 'Unknown'}</span>
               </div>
             </div>
 
-            <div className={styles.buttonGroup} style={{ marginTop: 'var(--spacing-xl)' }}>
-              <div className={styles.leftButtons}>
+            <div className="buttonGroup" style={{ marginTop: 'var(--spacing-xl)' }}>
+              <div className="leftButtons">
                 {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
                   <Button
                     variant="success"

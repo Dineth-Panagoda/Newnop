@@ -3,7 +3,7 @@
 // ========================================
 // Reusable button component with different variants and sizes
 
-import styles from './Button.module.css';
+import './Button.css';
 import classNames from '../../utils/classNames';
 
 /**
@@ -29,10 +29,10 @@ const Button = ({
 }) => {
   // Combine class names based on props
   const buttonClasses = classNames(
-    styles.button,
-    styles[`button-${size}`],
-    styles[`button-${variant}`],
-    fullWidth && styles['button-fullWidth'],
+    'button',
+    `button-${size}`,
+    `button-${variant}`,
+    fullWidth && 'button-fullWidth',
     className
   );
 

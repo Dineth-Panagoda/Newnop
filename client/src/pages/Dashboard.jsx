@@ -6,7 +6,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './Dashboard.module.css';
+import './Dashboard.css';
 import {
   fetchIssues,
   fetchIssueStats,
@@ -134,46 +134,46 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       {/* Header */}
-      <div className={styles.header}>
-        <h1 className={styles.title}>Dashboard</h1>
+      <div className="header">
+        <h1 className="title">Dashboard</h1>
 
         {/* Statistics Cards */}
-        <div className={styles.statsGrid}>
-          <Card className={styles.statCard}>
-            <div className={styles.statValue}>
+        <div className="statsGrid">
+          <Card className="statCard">
+            <div className="statValue">
               {statsLoading ? '...' : stats.Open || 0}
             </div>
-            <div className={styles.statLabel}>Open</div>
+            <div className="statLabel">Open</div>
           </Card>
 
-          <Card className={styles.statCard}>
-            <div className={styles.statValue}>
+          <Card className="statCard">
+            <div className="statValue">
               {statsLoading ? '...' : stats.InProgress || 0}
             </div>
-            <div className={styles.statLabel}>In Progress</div>
+            <div className="statLabel">In Progress</div>
           </Card>
 
-          <Card className={styles.statCard}>
-            <div className={styles.statValue}>
+          <Card className="statCard">
+            <div className="statValue">
               {statsLoading ? '...' : stats.Resolved || 0}
             </div>
-            <div className={styles.statLabel}>Resolved</div>
+            <div className="statLabel">Resolved</div>
           </Card>
 
-          <Card className={styles.statCard}>
-            <div className={styles.statValue}>
+          <Card className="statCard">
+            <div className="statValue">
               {statsLoading ? '...' : stats.Closed || 0}
             </div>
-            <div className={styles.statLabel}>Closed</div>
+            <div className="statLabel">Closed</div>
           </Card>
         </div>
       </div>
 
       {/* Filters and Search */}
-      <div className={styles.filtersSection}>
-        <div className={styles.filtersRow}>
+      <div className="filtersSection">
+        <div className="filtersRow">
           {/* Search input with debouncing */}
           <Input
             placeholder="Search by title or description..."
@@ -214,13 +214,13 @@ const Dashboard = () => {
           </Button>
         </div>
 
-        <div className={styles.actionsRow}>
+        <div className="actionsRow">
           <Button variant="primary" onClick={handleCreateIssue}>
             + Create Issue
           </Button>
 
           {/* Export buttons */}
-          <div className={styles.exportButtons}>
+          <div className="exportButtons">
             <Button
               variant="outline"
               size="small"
@@ -245,26 +245,26 @@ const Dashboard = () => {
       {loading ? (
         <Loader text="Loading issues..." />
       ) : issues.length === 0 ? (
-        <div className={styles.emptyState}>
+        <div className="emptyState">
           <h3>No issues found</h3>
           <p>Try adjusting your filters or create a new issue</p>
         </div>
       ) : (
         <>
-          <div className={styles.issuesList}>
+          <div className="issuesList">
             {issues.map((issue) => (
-              <Card key={issue.id} className={styles.issueCard} onClick={() => handleIssueClick(issue.id)}>
-                <div className={styles.issueHeader}>
-                  <h3 className={styles.issueTitle}>#{issue.id} - {issue.title}</h3>
-                  <div className={styles.issueBadges}>
+              <Card key={issue.id} className="issueCard" onClick={() => handleIssueClick(issue.id)}>
+                <div className="issueHeader">
+                  <h3 className="issueTitle">#{issue.id} - {issue.title}</h3>
+                  <div className="issueBadges">
                     <Badge variant={issue.status}>{issue.status}</Badge>
                     <Badge variant={issue.priority}>{issue.priority}</Badge>
                   </div>
                 </div>
 
-                <p className={styles.issueDescription}>{issue.description}</p>
+                <p className="issueDescription">{issue.description}</p>
 
-                <div className={styles.issueFooter}>
+                <div className="issueFooter">
                   <span>Created {formatDate(issue.createdAt)}</span>
                   <span>Severity: {issue.severity}</span>
                 </div>
@@ -274,7 +274,7 @@ const Dashboard = () => {
 
           {/* Pagination */}
           {pagination.totalPages > 1 && (
-            <div className={styles.pagination}>
+            <div className="pagination">
               <Button
                 variant="ghost"
                 size="small"
@@ -284,7 +284,7 @@ const Dashboard = () => {
                 ← Previous
               </Button>
 
-              <span className={styles.pageInfo}>
+              <span className="pageInfo">
                 Page {pagination.currentPage} of {pagination.totalPages} ({pagination.totalCount} total issues)
               </span>
 

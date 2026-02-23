@@ -6,7 +6,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './CreateIssue.module.css';
+import './CreateIssue.css';
 import { createIssue } from '../redux/slices/issuesSlice';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
@@ -107,17 +107,17 @@ const CreateIssue = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Create New Issue</h1>
+    <div className="container">
+      <h1 className="title">Create New Issue</h1>
 
       <Card>
         {/* Show error if exists */}
-        {error && <div className={styles.errorAlert}>{error}</div>}
+        {error && <div className="errorAlert">{error}</div>}
 
         {/* Show success message */}
-        {successMessage && <div className={styles.successAlert}>{successMessage}</div>}
+        {successMessage && <div className="successAlert">{successMessage}</div>}
 
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           {/* Title input */}
           <Input
             label="Title"
@@ -143,7 +143,7 @@ const CreateIssue = () => {
           />
 
           {/* Status, Priority, and Severity in a row */}
-          <div className={styles.formRow}>
+          <div className="formRow">
             {/* Status select */}
             <Select
               label="Status"
@@ -191,7 +191,7 @@ const CreateIssue = () => {
           </div>
 
           {/* Action buttons */}
-          <div className={styles.buttonGroup}>
+          <div className="buttonGroup">
             <Button
               type="button"
               variant="ghost"

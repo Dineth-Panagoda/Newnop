@@ -3,7 +3,7 @@
 // ========================================
 // Container component for displaying content in a card layout
 
-import styles from './Card.module.css';
+import './Card.css';
 import classNames from '../../utils/classNames';
 
 /**
@@ -22,9 +22,9 @@ const Card = ({
   ...rest
 }) => {
   const cardClasses = classNames(
-    styles.card,
-    hoverable && styles['card-hoverable'],
-    padding && styles[`card-${padding}`],
+    "card",
+    hoverable && 'card-hoverable',
+    padding && `card-${padding}`,
     className
   );
 
@@ -38,9 +38,9 @@ const Card = ({
 // Card Header sub-component
 const CardHeader = ({ children, noPadding, noBorder, className, ...rest }) => {
   const headerClasses = classNames(
-    styles.cardHeader,
-    noPadding && styles['cardHeader-noPadding'],
-    noBorder && styles['cardHeader-noBorder'],
+    "cardHeader",
+    noPadding && 'cardHeader-noPadding',
+    noBorder && 'cardHeader-noBorder',
     className
   );
 
@@ -54,8 +54,8 @@ const CardHeader = ({ children, noPadding, noBorder, className, ...rest }) => {
 // Card Body sub-component
 const CardBody = ({ children, noPadding, className, ...rest }) => {
   const bodyClasses = classNames(
-    styles.cardBody,
-    noPadding && styles['cardBody-noPadding'],
+    "cardBody",
+    noPadding && 'cardBody-noPadding',
     className
   );
 
@@ -69,9 +69,9 @@ const CardBody = ({ children, noPadding, className, ...rest }) => {
 // Card Footer sub-component
 const CardFooter = ({ children, noPadding, noBorder, className, ...rest }) => {
   const footerClasses = classNames(
-    styles.cardFooter,
-    noPadding && styles['cardFooter-noPadding'],
-    noBorder && styles['cardFooter-noBorder'],
+    "cardFooter",
+    noPadding && 'cardFooter-noPadding',
+    noBorder && 'cardFooter-noBorder',
     className
   );
 
@@ -84,7 +84,7 @@ const CardFooter = ({ children, noPadding, noBorder, className, ...rest }) => {
 
 // Card Title sub-component
 const CardTitle = ({ children, className, ...rest }) => {
-  const titleClasses = classNames(styles.cardTitle, className);
+  const titleClasses = classNames("cardTitle", className);
 
   return (
     <h3 className={titleClasses} {...rest}>
@@ -95,7 +95,7 @@ const CardTitle = ({ children, className, ...rest }) => {
 
 // Card Subtitle sub-component
 const CardSubtitle = ({ children, className, ...rest }) => {
-  const subtitleClasses = classNames(styles.cardSubtitle, className);
+  const subtitleClasses = classNames("cardSubtitle", className);
 
   return (
     <p className={subtitleClasses} {...rest}>

@@ -3,7 +3,7 @@
 // ========================================
 // Reusable dropdown select with label and error handling
 
-import styles from './Select.module.css';
+import './Select.css';
 import classNames from '../../utils/classNames';
 
 /**
@@ -32,18 +32,18 @@ const Select = ({
   ...rest
 }) => {
   const selectClasses = classNames(
-    styles.select,
-    error && styles['select-error'],
+    "select",
+    error && 'select-error',
     className
   );
 
   const labelClasses = classNames(
-    styles.label,
-    required && styles['label-required']
+    "label",
+    required && 'label-required'
   );
 
   return (
-    <div className={styles.selectContainer}>
+    <div className="selectContainer">
       {label && (
         <label htmlFor={name} className={labelClasses}>
           {label}
@@ -77,7 +77,7 @@ const Select = ({
         })}
       </select>
 
-      {error && <span className={styles.errorMessage}>{error}</span>}
+      {error && <span className="errorMessage">{error}</span>}
     </div>
   );
 };

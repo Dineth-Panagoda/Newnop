@@ -4,7 +4,7 @@
 // Overlay dialog for confirmations, forms, and messages
 
 import { useEffect } from 'react';
-import styles from './Modal.module.css';
+import './Modal.css';
 import classNames from '../../utils/classNames';
 import Button from './Button';
 
@@ -66,21 +66,21 @@ const Modal = ({
   };
 
   const modalClasses = classNames(
-    styles.modalContainer,
-    styles[`modalContainer-${size}`],
+    "modalContainer",
+    `modalContainer-${size}`,
     className
   );
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
+    <div className="overlay" onClick={handleOverlayClick}>
       <div className={modalClasses} {...rest}>
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className={styles.modalHeader}>
-            {title && <h2 className={styles.modalTitle}>{title}</h2>}
+          <div className="modalHeader">
+            {title && <h2 className="modalTitle">{title}</h2>}
             {showCloseButton && (
               <button
-                className={styles.closeButton}
+                className="closeButton"
                 onClick={onClose}
                 aria-label="Close modal"
               >
@@ -91,10 +91,10 @@ const Modal = ({
         )}
 
         {/* Body */}
-        <div className={styles.modalBody}>{children}</div>
+        <div className="modalBody">{children}</div>
 
         {/* Footer (if provided) */}
-        {footer && <div className={styles.modalFooter}>{footer}</div>}
+        {footer && <div className="modalFooter">{footer}</div>}
       </div>
     </div>
   );
@@ -141,7 +141,7 @@ export const ConfirmModal = ({
       }
       {...rest}
     >
-      <p className={styles.confirmMessage}>{message}</p>
+      <p className="confirmMessage">{message}</p>
     </Modal>
   );
 };

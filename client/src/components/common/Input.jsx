@@ -3,7 +3,7 @@
 // ========================================
 // Reusable input field with label, error message, and validation
 
-import styles from './Input.module.css';
+import './Input.css';
 import classNames from '../../utils/classNames';
 
 /**
@@ -39,18 +39,18 @@ const Input = ({
 }) => {
   // Determine input/textarea class names
   const inputClasses = classNames(
-    multiline ? styles.textarea : styles.input,
-    error && (multiline ? styles['textarea-error'] : styles['input-error']),
+    multiline ? 'textarea' : 'input',
+    error && (multiline ? 'textarea-error' : 'input-error'),
     className
   );
 
   const labelClasses = classNames(
-    styles.label,
-    required && styles['label-required']
+    'label',
+    required && 'label-required'
   );
 
   return (
-    <div className={styles.inputContainer}>
+    <div className="inputContainer">
       {/* Render label if provided */}
       {label && (
         <label htmlFor={name} className={labelClasses}>
@@ -88,10 +88,10 @@ const Input = ({
       )}
 
       {/* Show error message if exists */}
-      {error && <span className={styles.errorMessage}>{error}</span>}
+      {error && <span className="errorMessage">{error}</span>}
 
       {/* Show helper text if exists and no error */}
-      {helperText && !error && <span className={styles.helperText}>{helperText}</span>}
+      {helperText && !error && <span className="helperText">{helperText}</span>}
     </div>
   );
 };

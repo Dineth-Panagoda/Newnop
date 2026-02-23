@@ -5,7 +5,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './Navbar.module.css';
+import './Navbar.css';
 import { logout } from '../redux/slices/authSlice';
 import Button from './common/Button';
 
@@ -26,29 +26,29 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={styles.nav}>
-      <div className={styles.navContainer}>
+    <nav className="nav">
+      <div className="navContainer">
         {/* Logo */}
-        <Link to="/dashboard" className={styles.logo}>
+        <Link to="/dashboard" className="logo">
           Issue Tracker
         </Link>
 
         {/* Right side: Nav links and user info */}
-        <div className={styles.userInfo}>
-          <div className={styles.navLinks}>
+        <div className="userInfo">
+          <div className="navLinks">
             {/* Link to dashboard */}
-            <Link to="/dashboard" className={styles.navLink}>
+            <Link to="/dashboard" className="navLink">
               Dashboard
             </Link>
 
             {/* Link to create new issue */}
-            <Link to="/issues/create" className={styles.navLink}>
+            <Link to="/issues/create" className="navLink">
               New Issue
             </Link>
           </div>
 
           {/* Display user email */}
-          {user && <span className={styles.userEmail}>{user.email}</span>}
+          {user && <span className="userEmail">{user.email}</span>}
 
           {/* Logout button */}
           <Button variant="ghost" size="small" onClick={handleLogout}>

@@ -3,7 +3,7 @@
 // ========================================
 // Loading spinner to indicate async operations
 
-import styles from './Loader.module.css';
+import './Loader.css';
 import classNames from '../../utils/classNames';
 
 /**
@@ -20,20 +20,20 @@ const Loader = ({
   ...rest
 }) => {
   const containerClasses = classNames(
-    styles.loaderContainer,
-    fullScreen && styles['loaderContainer-fullScreen'],
+    "loaderContainer",
+    fullScreen && 'loaderContainer-fullScreen',
     className
   );
 
   const spinnerClasses = classNames(
-    styles.spinner,
-    styles[`spinner-${size}`]
+    "spinner",
+    `spinner-${size}`
   );
 
   return (
     <div className={containerClasses} {...rest}>
       <div className={spinnerClasses} />
-      {text && <p className={styles.loadingText}>{text}</p>}
+      {text && <p className="loadingText">{text}</p>}
     </div>
   );
 };
