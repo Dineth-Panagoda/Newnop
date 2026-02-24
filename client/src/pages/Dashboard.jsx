@@ -252,43 +252,45 @@ const Dashboard = () => {
       {/* Filters and Search */}
       <div className="filtersSection">
         <div className="filtersRow">
-          {/* Search input with debouncing */}
-          <Input
-            placeholder="Search by title or description..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            showFilledState={true}
-          />
+          <div className="filterFields">
+            {/* Search input with debouncing */}
+            <Input
+              placeholder="Search by title or description..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              showFilledState={true}
+            />
 
-          {/* Status filter */}
-          <Select
-            name="status"
-            value={filters.status}
-            onChange={handleFilterChange}
-            options={['Open', 'InProgress', 'Resolved', 'Closed']}
-            placeholder="All Statuses"
-            showFilledState={true}
-          />
+            {/* Status filter */}
+            <Select
+              name="status"
+              value={filters.status}
+              onChange={handleFilterChange}
+              options={['Open', 'InProgress', 'Resolved', 'Closed']}
+              placeholder="All Statuses"
+              showFilledState={true}
+            />
 
-          {/* Priority filter */}
-          <Select
-            name="priority"
-            value={filters.priority}
-            onChange={handleFilterChange}
-            options={['Low', 'Medium', 'High', 'Critical']}
-            placeholder="All Priorities"
-            showFilledState={true}
-          />
+            {/* Priority filter */}
+            <Select
+              name="priority"
+              value={filters.priority}
+              onChange={handleFilterChange}
+              options={['Low', 'Medium', 'High', 'Critical']}
+              placeholder="All Priorities"
+              showFilledState={true}
+            />
 
-          {/* Severity filter */}
-          <Select
-            name="severity"
-            value={filters.severity}
-            onChange={handleFilterChange}
-            options={['Low', 'Medium', 'High', 'Critical']}
-            placeholder="All Severities"
-            showFilledState={true}
-          />
+            {/* Severity filter */}
+            <Select
+              name="severity"
+              value={filters.severity}
+              onChange={handleFilterChange}
+              options={['Low', 'Medium', 'High', 'Critical']}
+              placeholder="All Severities"
+              showFilledState={true}
+            />
+          </div>
 
           {/* Clear filters button - only show when filters are active */}
           {(searchInput || filters.status || filters.priority || filters.severity) && (

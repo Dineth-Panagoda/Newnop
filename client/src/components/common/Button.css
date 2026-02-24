@@ -82,19 +82,22 @@
 
 /* Color variants - Danger (Red) */
 .button-danger {
-  background-color: #FF1744;
-  color: white;
+  color: #ff0033;
+  background-color: #fd003310;
+  border: 1px solid #ff0033;
+  box-shadow: none;
 }
 
 .button-danger:hover:not(:disabled) {
   background-color: #E60028;
+  color: black;
 }
 
 /* Color variants - Outline */
 .button-outline {
   background-color: transparent;
   color: #212121;
-  border: 2px solid #E0E0E0;
+  border: 1px solid #E0E0E0;
   box-shadow: none;
 }
 
