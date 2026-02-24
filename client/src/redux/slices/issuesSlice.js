@@ -5,6 +5,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_URL } from '../../config/api';
 
 // ========================================
 // HELPER FUNCTION TO GET AUTH HEADERS
@@ -87,7 +88,7 @@ export const fetchIssues = createAsyncThunk(
         ...(severity && { severity })
       });
 
-      const response = await axios.get(`/api/issues?${params}`, getAuthHeaders());
+      const response = await axios.get(`${API_URL}/issues?${params}`, getAuthHeaders());
       return response.data.data; // Returns { issues, pagination }
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch issues');
@@ -100,7 +101,7 @@ export const fetchIssueById = createAsyncThunk(
   'issues/fetchIssueById',
   async (issueId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/issues/${issueId}`, getAuthHeaders());
+      const response = await axios.get(`${API_URL}/issues/${issueId}`, getAuthHeaders());
       return response.data.data.issue;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch issue');
@@ -113,7 +114,7 @@ export const fetchIssueStats = createAsyncThunk(
   'issues/fetchStats',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/api/issues/stats', getAuthHeaders());
+      const response = await axios.get(`${API_URL}/issues/stats`, getAuthHeaders());
       return response.data.data; // Returns { counts, total }
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch stats');
@@ -126,7 +127,7 @@ export const createIssue = createAsyncThunk(
   'issues/createIssue',
   async (issueData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('/api/issues', issueData, getAuthHeaders());
+      const response = await axios.post(`${API_URL}/issues`, issueData, getAuthHeaders());
       return response.data.data.issue;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to create issue');
@@ -139,7 +140,7 @@ export const updateIssue = createAsyncThunk(
   'issues/updateIssue',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`/api/issues/${id}`, data, getAuthHeaders());
+      const response = await axios.put(`${API_URL}/issues/${id}`, data, getAuthHeaders());
       return response.data.data.issue;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to update issue');
@@ -152,7 +153,7 @@ export const deleteIssue = createAsyncThunk(
   'issues/deleteIssue',
   async (issueId, { rejectWithValue }) => {
     try {
-      await axios.delete(`/api/issues/${issueId}`, getAuthHeaders());
+      await axios.delete(`${API_URL}/issues/${issueId}`, getAuthHeaders());
       return issueId; // Return deleted issue ID
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to delete issue');
