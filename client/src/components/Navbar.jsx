@@ -35,25 +35,29 @@ const Navbar = () => {
 
         {/* Right side: Nav links and user info */}
         <div className="userInfo">
-          <div className="navLinks">
-            {/* Link to dashboard */}
-            <Link to="/dashboard" className="navLink">
-              Dashboard
-            </Link>
+        
 
-            {/* Link to create new issue */}
-            <Link to="/issues/create" className="navLink">
-              New Issue
-            </Link>
-          </div>
+          {/* User dropdown menu */}
+          {user && (
+            <div className="userMenu">
+              <div className="userMenuTrigger">
+                <span className="userName">{user.name || user.email}</span>
+                <span className="dropdownArrow">▼</span>
+              </div>
 
-          {/* Display user email */}
-          {user && <span className="userEmail">{user.email}</span>}
-
-          {/* Logout button */}
-          <Button variant="ghost" size="small" onClick={handleLogout}>
-            Logout
-          </Button>
+              <div className="userDropdown">
+                <div className="dropdownEmail">{user.email}</div>
+                <Button
+                  variant="ghost"
+                  size="small"
+                  onClick={handleLogout}
+                  className="dropdownLogout"
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </nav>

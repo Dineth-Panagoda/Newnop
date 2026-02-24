@@ -36,17 +36,7 @@
   border: 1px solid #F5F5F5;
 }
 
-/* Accent border on top of stat cards */
-.statCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: #76FF03;
-  border-radius: 0.75rem 0.75rem 0 0;
-}
+
 
 .statValue {
   font-size: 2.25rem;
@@ -75,6 +65,7 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr auto;
   gap: 1rem;
+  margin: 1rem 0;
 }
 
 @media (max-width: 768px) {
@@ -111,8 +102,7 @@
 
 .issueCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  border-color: #76FF03;
+  box-shadow: 0 4px 6px -1px rgba(60, 255, 0, 0.08), 0 2px 4px -1px rgba(0, 255, 26, 0.04);
 }
 
 .issueHeader {
@@ -185,4 +175,31 @@
 .emptyState h3 {
   color: #616161;
   margin-bottom: 0.5rem;
+}
+
+/* Success Notification */
+.successNotification {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  padding: 10px 30px;
+  border-radius: 120px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }

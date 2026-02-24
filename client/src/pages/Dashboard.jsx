@@ -33,6 +33,9 @@ const Dashboard = () => {
   // Local state for search input (to implement debouncing)
   const [searchInput, setSearchInput] = useState(filters.search || '');
 
+  // Local state for success notification
+  const [successNotification, setSuccessNotification] = useState('');
+
   // Debounce search input
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,6 +60,22 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(fetchIssueStats());
   }, [dispatch]);
+
+  // Check for success notification from localStorage
+  useEffect(() => {
+    const message = localStorage.getItem('successMessage');
+    if (message) {
+      setSuccessNotification(message);
+      localStorage.removeItem('successMessage');
+
+      // Auto-hide notification after 3 seconds
+      const timer = setTimeout(() => {
+        setSuccessNotification('');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   // Handle filter changes
   const handleFilterChange = (e) => {
@@ -135,6 +154,13 @@ const Dashboard = () => {
 
   return (
     <div className="container">
+      {/* Success notification */}
+      {successNotification && (
+        <div className="successNotification">
+          {successNotification}
+        </div>
+      )}
+
       {/* Header */}
       <div className="header">
         <h1 className="title">Dashboard</h1>

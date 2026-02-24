@@ -106,19 +106,17 @@ router.get('/', async (req, res) => {
     };
 
     // Add search filter if search term is provided
-    // Search in both title and description (case-insensitive)
+    // Search in both title and description (case-insensitive by default in MySQL)
     if (search) {
       where.OR = [
         {
           title: {
-            contains: search, // MySQL LIKE %search%
-            mode: 'insensitive' // Case-insensitive search
+            contains: search // MySQL LIKE %search% (case-insensitive with default collation)
           }
         },
         {
           description: {
-            contains: search,
-            mode: 'insensitive'
+            contains: search
           }
         }
       ];

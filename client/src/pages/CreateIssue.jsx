@@ -91,13 +91,11 @@ const CreateIssue = () => {
 
     // Check if creation was successful
     if (createIssue.fulfilled.match(result)) {
-      // Show success message
-      setSuccessMessage('Issue created successfully!');
+      // Store success message in localStorage to show on dashboard
+      localStorage.setItem('successMessage', 'Issue created successfully!');
 
-      // Redirect to issue detail page after a short delay
-      setTimeout(() => {
-        navigate(`/issues/${result.payload.id}`);
-      }, 1000);
+      // Redirect to dashboard
+      navigate('/dashboard');
     }
   };
 
