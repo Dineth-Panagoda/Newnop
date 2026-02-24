@@ -167,6 +167,39 @@ const Dashboard = () => {
     });
   };
 
+  // Generate result count text based on active filters
+  const getResultCountText = () => {
+    const count = pagination.totalCount;
+    const issueWord = count === 1 ? 'Issue' : 'Issues';
+
+    // Check if any filters are active
+    const hasFilters = filters.status || filters.priority || filters.severity || filters.search;
+
+    if (!hasFilters) {
+      return `${count} Total ${issueWord}`;
+    }
+
+    // Build filter description
+    let description = `${count} ${issueWord}`;
+    let hasAddedFilter = false;
+
+    if (filters.status) {
+      description += ` in ${filters.status} status`;
+      hasAddedFilter = true;
+    }
+
+    if (filters.priority) {
+      description += hasAddedFilter ? ` with ${filters.priority} priority` : ` with ${filters.priority} priority`;
+      hasAddedFilter = true;
+    }
+
+    if (filters.severity) {
+      description += hasAddedFilter ? ` and ${filters.severity} severity` : ` with ${filters.severity} severity`;
+    }
+
+    return description;
+  };
+
   return (
     <div className="container">
       {/* Success notification */}
@@ -262,7 +295,7 @@ const Dashboard = () => {
         <div className="actionsRow">
           {/* Result count */}
           <div className="resultCount">
-            {pagination.totalCount} {pagination.totalCount === 1 ? 'result' : 'results'}
+            {getResultCountText()}
           </div>
 
           {/* Export buttons */}

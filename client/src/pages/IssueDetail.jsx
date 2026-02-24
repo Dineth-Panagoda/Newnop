@@ -229,11 +229,7 @@ const IssueDetail = () => {
             ← Back
           </Button>
 
-          {!isEditing && (
-            <Button variant="primary" size="small" onClick={() => setIsEditing(true)}>
-              Edit
-            </Button>
-          )}
+          
         </div>
       </div>
 
@@ -323,12 +319,17 @@ const IssueDetail = () => {
             </div>
           </form>
         ) : (
-          // View mode
+          // View mode 
           <>
             <div style={{ marginBottom: 'var(--spacing-lg)' }}>
                 <h1 className="title">
                   #{currentIssue.id} - {currentIssue.title}
                 </h1>
+                {!isEditing && (
+                  <Button variant="primary" size="small" onClick={() => setIsEditing(true)}>
+                    Edit
+                  </Button>
+                )}
               <p style={{ color: 'var(--gray-600)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
                 {currentIssue.description}
               </p>
