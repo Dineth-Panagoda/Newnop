@@ -416,28 +416,31 @@ const Dashboard = () => {
           <div className="issuesList">
             {issues.map((issue) => (
               <Card key={issue.id} className="issueCard" onClick={() => handleIssueClick(issue.id)}>
-                <div className="issueHeader">
-                  <h3 className="issueTitle">#{issue.id} - {issue.title}</h3>
-                  <div className="issueBadges">
-                    <div className="badgeGroup">
-                      <span className="badgeLabel">Status:</span>
-                      <Badge variant={issue.status}>{issue.status}</Badge>
-                    </div>
-                    <div className="badgeGroup">
-                      <span className="badgeLabel">Priority:</span>
-                      <Badge variant={issue.priority}>{issue.priority}</Badge>
-                    </div>
-                    <div className="badgeGroup">
-                      <span className="badgeLabel">Severity:</span>
-                      <Badge variant={issue.severity}>{issue.severity}</Badge>
+                <div className="issueContent">
+                  <div className="issueLeft">
+                    <h3 className="issueTitle">#{issue.id} - {issue.title}</h3>
+                    <p className="issueDescription">{issue.description}</p>
+                    <div className="issueFooter">
+                      <span>Created {formatDate(issue.createdAt)}</span>
                     </div>
                   </div>
-                </div>
 
-                <p className="issueDescription">{issue.description}</p>
-
-                <div className="issueFooter">
-                  <span>Created {formatDate(issue.createdAt)}</span>
+                  <div className="issueRight">
+                    <div className="issueBadges">
+                      <div className="badgeGroup">
+                        <span className="badgeLabel">Status:</span>
+                        <Badge variant={issue.status}>{issue.status}</Badge>
+                      </div>
+                      <div className="badgeGroup">
+                        <span className="badgeLabel">Priority:</span>
+                        <Badge variant={issue.priority}>{issue.priority}</Badge>
+                      </div>
+                      <div className="badgeGroup">
+                        <span className="badgeLabel">Severity:</span>
+                        <Badge variant={issue.severity}>{issue.severity}</Badge>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Card>
             ))}
