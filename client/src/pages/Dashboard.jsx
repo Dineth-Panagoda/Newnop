@@ -419,8 +419,9 @@ const Dashboard = () => {
                 <div className="issueHeader">
                   <h3 className="issueTitle">#{issue.id} - {issue.title}</h3>
                   <div className="issueBadges">
-                    <Badge variant={issue.status}>{issue.status}</Badge>
-                    <Badge variant={issue.priority}>{issue.priority}</Badge>
+                    <Badge variant={issue.status}>Status: {issue.status}</Badge>
+                    <Badge variant={issue.priority}>Priority: {issue.priority}</Badge>
+                    <Badge variant={issue.severity}>Severity: {issue.severity}</Badge>
                   </div>
                 </div>
 
@@ -428,7 +429,6 @@ const Dashboard = () => {
 
                 <div className="issueFooter">
                   <span>Created {formatDate(issue.createdAt)}</span>
-                  <span>Severity: {issue.severity}</span>
                 </div>
               </Card>
             ))}

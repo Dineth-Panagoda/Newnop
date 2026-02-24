@@ -24,49 +24,49 @@
 /* Status variants - Using Greens and Grays */
 .badge-Open {
   background-color: #E3F2FD;
-  color: #1976D2;
-  border: 1px solid #BBDEFB;
+    color: #198ed2;
+    border: 1px solid #198ed278;
 }
 
 .badge-InProgress {
-  background-color: #FFF9C4;
+  background-color: #ffe9c4;
   color: #F57F17;
-  border: 1px solid #FFF59D;
+  border: 1px solid #f57f176b;
 }
 
 .badge-Resolved {
   background-color: #E8F5E9;
   color: #00C853;
-  border: 1px solid #C8E6C9;
+  border: 1px solid #00c8536c;
 }
 
 .badge-Closed {
-  background-color: #EEEEEE;
-  color: #616161;
-  border: 1px solid #E0E0E0;
+    background-color: #F5F5F5;
+      color: #616161;
+      border: 1px solid #6161615b;
 }
 
 /* Priority variants - Low to Critical */
 .badge-Low {
   background-color: #F5F5F5;
   color: #616161;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #6161615b;
 }
 
 .badge-Medium {
   background-color: #E3F2FD;
-  color: #1976D2;
-  border: 1px solid #BBDEFB;
+  color: #198ed2;
+  border: 1px solid #198ed278;
 }
 
 .badge-High {
-  background-color: #FFF9C4;
-  color: #F57F17;
-  border: 1px solid #FFF59D;
+  background-color: #ffe9c4;
+    color: #F57F17;
+    border: 1px solid #f57f176b;
 }
 
 .badge-Critical {
   background-color: #FFEBEE;
   color: #FF1744;
-  border: 1px solid #FFCDD2;
+  border: 1px solid #ff174572;
 }
