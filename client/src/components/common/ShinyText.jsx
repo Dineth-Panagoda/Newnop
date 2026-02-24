@@ -43,8 +43,8 @@ const ShinyText = ({
     '--shine-speed': `${speed}s`,
     '--shine-delay': `${delay}s`,
     '--shine-spread': `${spread}deg`,
-    '--shine-direction': direction === 'right' ? 'reverse' : 'normal',
-    '--shine-iteration': yoyo ? 'alternate' : 'normal',
+    '--shine-direction': yoyo ? 'alternate' : (direction === 'right' ? 'reverse' : 'normal'),
+    '--shine-iteration': 'infinite',
     animationPlayState: shouldPause ? 'paused' : 'running'
   };
 
