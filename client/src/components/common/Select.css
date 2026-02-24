@@ -24,10 +24,10 @@
 
 /* Select element */
 .select {
-  padding: 0.625rem 0.875rem;
+  padding: 0.625rem 2rem 0.625rem 1rem;
   font-size: 1rem;
   border: 1px solid #E0E0E0;
-  border-radius: 0.5rem;
+  border-radius: 120px;
   transition: all 0.2s ease;
   width: 100%;
   background-color: white;

@@ -35,6 +35,7 @@ const Dashboard = () => {
 
   // Local state for success notification
   const [successNotification, setSuccessNotification] = useState('');
+  const [isNotificationClosing, setIsNotificationClosing] = useState(false);
 
   // Debounce search input
   useEffect(() => {
@@ -67,15 +68,29 @@ const Dashboard = () => {
     if (message) {
       setSuccessNotification(message);
       localStorage.removeItem('successMessage');
-
-      // Auto-hide notification after 3 seconds
-      const timer = setTimeout(() => {
-        setSuccessNotification('');
-      }, 3000);
-
-      return () => clearTimeout(timer);
     }
   }, []);
+
+  // Auto-hide notification after 3 seconds
+  useEffect(() => {
+    if (successNotification) {
+      // Start closing animation after 2.7 seconds
+      const closeTimer = setTimeout(() => {
+        setIsNotificationClosing(true);
+      }, 2700);
+
+      // Remove notification after animation completes (3 seconds total)
+      const removeTimer = setTimeout(() => {
+        setSuccessNotification('');
+        setIsNotificationClosing(false);
+      }, 3000);
+
+      return () => {
+        clearTimeout(closeTimer);
+        clearTimeout(removeTimer);
+      };
+    }
+  }, [successNotification]);
 
   // Handle filter changes
   const handleFilterChange = (e) => {
@@ -156,8 +171,9 @@ const Dashboard = () => {
     <div className="container">
       {/* Success notification */}
       {successNotification && (
-        <div className="successNotification">
-          {successNotification}
+        <div className={`successNotification ${isNotificationClosing ? 'closing' : ''}`}>
+          <div className="notificationIcon">✓</div>
+          <span>{successNotification}</span>
         </div>
       )}
 
