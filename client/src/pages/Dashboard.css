@@ -218,7 +218,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   margin-top: 3rem;
 }
 
@@ -226,6 +226,13 @@
   font-size: 0.875rem;
   color: #616161;
   font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pageRange {
+  margin-top: 2px;
 }
 
 /* Empty State */

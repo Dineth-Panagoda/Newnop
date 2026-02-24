@@ -446,9 +446,10 @@ const Dashboard = () => {
                 ← Previous
               </Button>
 
-              <span className="pageInfo">
-                    Page {pagination.currentPage} of {pagination.totalPages} <br></br>
-                    ({pagination.totalCount} total issues)
+                  <span className="pageInfo">
+                    <span> Page {pagination.currentPage} of {pagination.totalPages}</span>
+                    <span> ({(pagination.currentPage - 1) * pagination.limit + 1}-{Math.min(pagination.currentPage * pagination.limit, pagination.totalCount)} of {pagination.totalCount}) </span>
+                    
               </span>
 
               <Button
