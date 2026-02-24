@@ -189,7 +189,7 @@ const CreateIssue = () => {
           </div>
 
           {/* Action buttons */}
-          <div className="buttonGroup">
+          <div className="createIssueButtonGroup">
             <Button
               type="button"
               variant="ghost"

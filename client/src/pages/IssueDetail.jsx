@@ -292,7 +292,7 @@ const IssueDetail = () => {
               />
             </div>
 
-            <div className="buttonGroup">
+            <div className="issueDetailButtonGroup">
               <Button
                 type="button"
                 variant="danger"
@@ -302,7 +302,7 @@ const IssueDetail = () => {
                 Delete Issue
               </Button>
 
-              <div className="leftButtons">
+              <div className="issueDetailLeftButtons">
                 <Button
                   type="button"
                   variant="ghost"
@@ -319,10 +319,11 @@ const IssueDetail = () => {
             </div>
           </form>
         ) : (
-          // View mode 
+          // View mode
           <>
             <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                <h1 className="title">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-md)' }}>
+                <h1 className="title" style={{ margin: 0 }}>
                   #{currentIssue.id} - {currentIssue.title}
                 </h1>
                 {!isEditing && (
@@ -330,6 +331,7 @@ const IssueDetail = () => {
                     Edit
                   </Button>
                 )}
+              </div>
               <p style={{ color: 'var(--gray-600)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
                 {currentIssue.description}
               </p>
@@ -352,7 +354,7 @@ const IssueDetail = () => {
               </div>
             </div>
 
-            <div className="buttonGroup" style={{ marginTop: 'var(--spacing-xl)' }}>
+            <div className="issueDetailButtonGroup">
               <div>
                 <Button
                   variant="danger"
@@ -362,8 +364,8 @@ const IssueDetail = () => {
                 </Button>
               </div>
 
-              <div className="leftButtons">
-                
+              <div className="issueDetailLeftButtons">
+
 
                 {currentIssue.status !== 'Closed' && (
                   <Button

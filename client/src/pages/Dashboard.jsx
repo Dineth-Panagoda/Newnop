@@ -257,6 +257,7 @@ const Dashboard = () => {
             placeholder="Search by title or description..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
+            showFilledState={true}
           />
 
           {/* Status filter */}
@@ -266,6 +267,7 @@ const Dashboard = () => {
             onChange={handleFilterChange}
             options={['Open', 'InProgress', 'Resolved', 'Closed']}
             placeholder="All Statuses"
+            showFilledState={true}
           />
 
           {/* Priority filter */}
@@ -275,6 +277,7 @@ const Dashboard = () => {
             onChange={handleFilterChange}
             options={['Low', 'Medium', 'High', 'Critical']}
             placeholder="All Priorities"
+            showFilledState={true}
           />
 
           {/* Severity filter */}
@@ -284,6 +287,7 @@ const Dashboard = () => {
             onChange={handleFilterChange}
             options={['Low', 'Medium', 'High', 'Critical']}
             placeholder="All Severities"
+            showFilledState={true}
           />
 
           {/* Clear filters button - only show when filters are active */}

@@ -17,6 +17,7 @@ import classNames from '../../utils/classNames';
  * @param {boolean} disabled - Disable select
  * @param {string} error - Error message to display
  * @param {string} placeholder - Placeholder option text
+ * @param {boolean} showFilledState - Show green border when field has value
  */
 const Select = ({
   label,
@@ -28,13 +29,14 @@ const Select = ({
   disabled = false,
   error,
   placeholder = 'Select an option',
+  showFilledState = false,
   className,
   ...rest
 }) => {
   const selectClasses = classNames(
     "select",
     error && 'select-error',
-    value && 'select-filled',
+    showFilledState && value && 'select-filled',
     className
   );
 

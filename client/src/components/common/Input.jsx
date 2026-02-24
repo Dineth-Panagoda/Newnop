@@ -20,6 +20,7 @@ import classNames from '../../utils/classNames';
  * @param {string} helperText - Helper text to display
  * @param {boolean} multiline - Render as textarea instead of input
  * @param {number} rows - Number of rows for textarea
+ * @param {boolean} showFilledState - Show green border when field has value
  */
 const Input = ({
   label,
@@ -34,6 +35,7 @@ const Input = ({
   helperText,
   multiline = false,
   rows = 3,
+  showFilledState = false,
   className,
   ...rest
 }) => {
@@ -41,7 +43,7 @@ const Input = ({
   const inputClasses = classNames(
     multiline ? 'textarea' : 'input',
     error && (multiline ? 'textarea-error' : 'input-error'),
-    value && (multiline ? 'textarea-filled' : 'input-filled'),
+    showFilledState && value && (multiline ? 'textarea-filled' : 'input-filled'),
     className
   );
 
