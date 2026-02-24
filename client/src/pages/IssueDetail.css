@@ -26,6 +26,22 @@
   font-size: 1.875rem;
   font-weight: 700;
   color: #212121;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+  flex: 1;
+}
+
+.titleEditContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.titleEditContainer > :last-child {
+  flex-shrink: 0;
 }
 
 .issueId {

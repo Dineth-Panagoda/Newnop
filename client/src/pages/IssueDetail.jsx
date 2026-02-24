@@ -360,7 +360,7 @@ const IssueDetail = () => {
           // View mode
           <>
             <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-md)' }}>
+              <div className="titleEditContainer">
                 <h1 className="title" style={{ margin: 0 }}>
                   #{currentIssue.id} - {currentIssue.title}
                 </h1>
