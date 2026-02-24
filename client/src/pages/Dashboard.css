@@ -80,10 +80,11 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: 0 0 0 20px;
 }
 
 .resultCount {
-  font-size: 0.875rem;
+  font-size: 18px;
   color: #616161;
   font-weight: 500;
 }

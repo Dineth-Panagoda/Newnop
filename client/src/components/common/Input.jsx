@@ -41,6 +41,7 @@ const Input = ({
   const inputClasses = classNames(
     multiline ? 'textarea' : 'input',
     error && (multiline ? 'textarea-error' : 'input-error'),
+    value && (multiline ? 'textarea-filled' : 'input-filled'),
     className
   );
 

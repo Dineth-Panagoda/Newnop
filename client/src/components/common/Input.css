@@ -39,6 +39,10 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.input-filled {
+  border-color: #76FF03;
+}
+
 .input-error {
   border-color: #FF1744;
 }
@@ -75,6 +79,10 @@
   outline: none;
   border-color: #76FF03;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.textarea-filled {
+  border-color: #76FF03;
 }
 
 .textarea-error {

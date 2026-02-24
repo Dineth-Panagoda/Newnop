@@ -34,6 +34,7 @@ const Select = ({
   const selectClasses = classNames(
     "select",
     error && 'select-error',
+    value && 'select-filled',
     className
   );
 
