@@ -228,6 +228,15 @@
   font-weight: 500;
 }
 
+/* Search term highlighting */
+mark {
+  background-color: #76FF03;
+  color: #212121;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
 /* Pagination */
 .pagination {
   display: flex;

@@ -245,6 +245,36 @@ const Dashboard = () => {
     });
   };
 
+  // Escape special regex characters
+  const escapeRegex = (str) => {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  };
+
+  // Highlight search term in text
+  const highlightText = (text, searchTerm) => {
+    if (!searchTerm || !searchTerm.trim()) {
+      return text;
+    }
+
+    try {
+      const escapedTerm = escapeRegex(searchTerm.trim());
+      const regex = new RegExp(`(${escapedTerm})`, 'gi');
+      const parts = text.split(regex);
+
+      return parts.map((part, index) => {
+        if (regex.test(part)) {
+          // Reset regex lastIndex for next test
+          regex.lastIndex = 0;
+          return <mark key={index}>{part}</mark>;
+        }
+        return part;
+      });
+    } catch (error) {
+      // If regex fails, return original text
+      return text;
+    }
+  };
+
   // Generate result count text based on active filters
   const getResultCountText = () => {
     const count = pagination.totalCount;
@@ -420,8 +450,12 @@ const Dashboard = () => {
               <Card key={issue.id} className="issueCard" onClick={() => handleIssueClick(issue.id)}>
                 <div className="issueContent">
                   <div className="issueLeft">
-                    <h3 className="issueTitle">#{issue.id} - {issue.title}</h3>
-                    <p className="issueDescription">{issue.description}</p>
+                    <h3 className="issueTitle">
+                      #{issue.id} - {highlightText(issue.title, filters.search)}
+                    </h3>
+                    <p className="issueDescription">
+                      {highlightText(issue.description, filters.search)}
+                    </p>
                     <div className="issueFooter">
                       <span>Created {formatDate(issue.createdAt)}</span>
                     </div>
