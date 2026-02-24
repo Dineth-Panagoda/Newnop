@@ -419,9 +419,18 @@ const Dashboard = () => {
                 <div className="issueHeader">
                   <h3 className="issueTitle">#{issue.id} - {issue.title}</h3>
                   <div className="issueBadges">
-                    <Badge variant={issue.status}>Status: {issue.status}</Badge>
-                    <Badge variant={issue.priority}>Priority: {issue.priority}</Badge>
-                    <Badge variant={issue.severity}>Severity: {issue.severity}</Badge>
+                    <div className="badgeGroup">
+                      <span className="badgeLabel">Status:</span>
+                      <Badge variant={issue.status}>{issue.status}</Badge>
+                    </div>
+                    <div className="badgeGroup">
+                      <span className="badgeLabel">Priority:</span>
+                      <Badge variant={issue.priority}>{issue.priority}</Badge>
+                    </div>
+                    <div className="badgeGroup">
+                      <span className="badgeLabel">Severity:</span>
+                      <Badge variant={issue.severity}>{issue.severity}</Badge>
+                    </div>
                   </div>
                 </div>
 
