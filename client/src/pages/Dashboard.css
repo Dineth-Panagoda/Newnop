@@ -110,6 +110,13 @@
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 1rem;
   flex: 1;
+  align-items: end;
+}
+
+/* Ensure input and select containers align properly in filters */
+.filterFields .inputContainer,
+.filterFields .selectContainer {
+  margin: 0;
 }
 
 @media (max-width: 768px) {

@@ -65,26 +65,28 @@ const Input = ({
   return (
     <div className="inputContainer">
       {/* Render label with character counter */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        {label && (
-          <label htmlFor={name} className={labelClasses}>
-            {label}
-          </label>
-        )}
+      {(label || showCounter) && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {label && (
+            <label htmlFor={name} className={labelClasses}>
+              {label}
+            </label>
+          )}
 
-        {showCounter && (
-          <span
-            className="charCounter"
-            style={{
-              fontSize: '0.875rem',
-              color: isAtLimit ? 'var(--red-600)' : isNearLimit ? 'var(--orange-600)' : 'var(--gray-500)',
-              fontWeight: isAtLimit ? '600' : '400'
-            }}
-          >
-            {currentLength}{maxLength && `/${maxLength}`}
-          </span>
-        )}
-      </div>
+          {showCounter && (
+            <span
+              className="charCounter"
+              style={{
+                fontSize: '0.875rem',
+                color: isAtLimit ? 'var(--red-600)' : isNearLimit ? 'var(--orange-600)' : 'var(--gray-500)',
+                fontWeight: isAtLimit ? '600' : '400'
+              }}
+            >
+              {currentLength}{maxLength && `/${maxLength}`}
+            </span>
+          )}
+        </div>
+      )}
 
       {/* Render textarea or input based on multiline prop */}
       {multiline ? (
