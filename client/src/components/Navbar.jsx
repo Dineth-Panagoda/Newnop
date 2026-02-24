@@ -10,6 +10,7 @@ import './Navbar.css';
 import { logout } from '../redux/slices/authSlice';
 import Button from './common/Button';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import ShinyText from './common/ShinyText';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -63,8 +64,15 @@ const Navbar = () => {
     <nav className={navClasses}>
       <div className="navContainer">
         {/* Logo */}
-        <Link to="/dashboard" className="logo">
-          IssueTrackr.
+        <Link to="/dashboard" className="logo shiny-text-trigger">
+          <ShinyText
+            text="IssueTrackr."
+            speed={5}
+            color="#212121"
+            shineColor="#76FF03"
+            spread={120}
+            direction="left"
+          />
         </Link>
 
         {/* Right side: Nav links and user info */}

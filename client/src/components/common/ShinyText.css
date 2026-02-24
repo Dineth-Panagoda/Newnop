@@ -1,0 +1,46 @@
+/* ========================================
+   SHINY TEXT COMPONENT STYLES
+   ======================================== */
+
+.shiny-text {
+  display: inline-block;
+  color: var(--shine-color);
+  font-weight: inherit;
+  font-size: inherit;
+  background: none;
+  -webkit-text-fill-color: var(--shine-color);
+}
+
+/* Apply gradient and animation only on hover */
+.shiny-text-trigger:hover .shiny-text {
+  background: linear-gradient(
+    var(--shine-spread),
+    var(--shine-color) 0%,
+    var(--shine-color) 40%,
+    var(--shine-highlight) 50%,
+    var(--shine-color) 60%,
+    var(--shine-color) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-position: 200% center;
+  animation: shine var(--shine-speed) linear var(--shine-delay) var(--shine-iteration, infinite);
+  animation-direction: var(--shine-direction);
+}
+
+.shiny-text-disabled {
+  color: var(--shine-color);
+  background: none;
+  animation: none;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}

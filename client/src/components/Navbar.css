@@ -44,13 +44,8 @@
 .logo {
   font-size: 20px;
   font-weight: 700;
-  color: #212121;
   text-decoration: none;
-  transition: color 200ms ease-in-out;
-}
-
-.logo:hover {
-  color: #76FF03;
+  transition: all 200ms ease-in-out;
 }
 
 /* Navigation links container */
