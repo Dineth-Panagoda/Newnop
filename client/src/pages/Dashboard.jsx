@@ -138,6 +138,9 @@ const Dashboard = () => {
       {/* Header */}
       <div className="header">
         <h1 className="title">Dashboard</h1>
+        <Button variant="primary" onClick={handleCreateIssue}>
+          + Create Issue
+        </Button>
 
         {/* Statistics Cards */}
         <div className="statsGrid">
@@ -215,9 +218,7 @@ const Dashboard = () => {
         </div>
 
         <div className="actionsRow">
-          <Button variant="primary" onClick={handleCreateIssue}>
-            + Create Issue
-          </Button>
+          
 
           {/* Export buttons */}
           <div className="exportButtons">

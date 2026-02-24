@@ -30,7 +30,7 @@ const Navbar = () => {
       <div className="navContainer">
         {/* Logo */}
         <Link to="/dashboard" className="logo">
-          Issue Tracker
+          IssueTrackr.
         </Link>
 
         {/* Right side: Nav links and user info */}
