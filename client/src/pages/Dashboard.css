@@ -89,9 +89,53 @@
   font-weight: 500;
 }
 
-.exportButtons {
-  display: flex;
-  gap: 0.5rem;
+/* Export menu dropdown */
+.exportMenu {
+  position: relative;
+}
+
+.exportDropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #F5F5F5;
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 200ms ease-in-out;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.exportMenu:hover .exportDropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.exportOption {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.875rem;
+  color: #212121;
+  cursor: pointer;
+  transition: background-color 200ms ease-in-out;
+  font-family: inherit;
+}
+
+.exportOption:hover {
+  background-color: #F5F5F5;
+}
+
+.exportOption:first-child {
+  border-bottom: 1px solid #F5F5F5;
 }
 
 /* Issues List */

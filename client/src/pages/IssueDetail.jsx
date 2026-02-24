@@ -327,7 +327,7 @@ const IssueDetail = () => {
                   #{currentIssue.id} - {currentIssue.title}
                 </h1>
                 {!isEditing && (
-                  <Button variant="primary" size="small" onClick={() => setIsEditing(true)}>
+                    <Button variant="outline" size="small" onClick={() => setIsEditing(true)}>
                     Edit
                   </Button>
                 )}

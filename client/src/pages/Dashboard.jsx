@@ -304,24 +304,23 @@ const Dashboard = () => {
             {getResultCountText()}
           </div>
 
-          {/* Export buttons */}
-          <div className="exportButtons">
+          {/* Export menu */}
+          <div className="exportMenu">
             <Button
               variant="outline"
               size="small"
-              onClick={handleExportCSV}
               disabled={issues.length === 0}
             >
-              Export CSV
+              Export List
             </Button>
-            <Button
-              variant="outline"
-              size="small"
-              onClick={handleExportJSON}
-              disabled={issues.length === 0}
-            >
-              Export JSON
-            </Button>
+            <div className="exportDropdown">
+              <button onClick={handleExportCSV} className="exportOption">
+                Export as CSV
+              </button>
+              <button onClick={handleExportJSON} className="exportOption">
+                Export as JSON
+              </button>
+            </div>
           </div>
         </div>
       </div>
