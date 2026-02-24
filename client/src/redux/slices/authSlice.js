@@ -1,21 +1,10 @@
-// ========================================
-// AUTHENTICATION SLICE
-// ========================================
-// Manages authentication state (user, token, login status)
-// A "slice" in Redux Toolkit is a collection of reducer logic and actions for a single feature
+// Authentication Slice - Manages user authentication state and actions
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from '../../config/api';
 
-// ========================================
-// INITIAL STATE
-// ========================================
-
-/**
- * Check if user is already logged in (from localStorage)
- * This allows users to stay logged in even after refreshing the page
- */
+// Load auth state from localStorage (persists login across page refreshes)
 const loadAuthFromStorage = () => {
   try {
     const token = localStorage.getItem('token');
@@ -45,31 +34,18 @@ const loadAuthFromStorage = () => {
 
 const initialState = loadAuthFromStorage();
 
-// ========================================
-// ASYNC THUNKS (for API calls)
-// ========================================
-
-/**
- * Async Thunks handle asynchronous operations (like API calls)
- * They automatically dispatch pending/fulfilled/rejected actions
- */
-
-// Register new user
+// Async thunk: Register new user
 export const registerUser = createAsyncThunk(
-  'auth/register', // Action type prefix
+  'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
-      // Make API request to register endpoint
       const response = await axios.post(`${API_URL}/auth/register`, userData);
 
-      // Save token and user to localStorage for persistence
       localStorage.setItem('token', response.data.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.data.user));
 
-      // Return data (will be available in action.payload in reducer)
       return response.data.data;
     } catch (error) {
-      // Return error message (will be available in action.payload in rejected case)
       return rejectWithValue(
         error.response?.data?.message || 'Registration failed'
       );
@@ -77,14 +53,13 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Login existing user
+// Async thunk: Login user
 export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${API_URL}/auth/login`, credentials);
 
-      // Save token and user to localStorage
       localStorage.setItem('token', response.data.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.data.user));
 
@@ -97,55 +72,33 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// ========================================
-// SLICE DEFINITION
-// ========================================
-
-/**
- * createSlice automatically generates:
- * - Action creators based on reducers
- * - A reducer function
- * - Action type constants
- */
 const authSlice = createSlice({
-  name: 'auth', // Used as prefix for action types
-
+  name: 'auth',
   initialState,
 
-  // Regular reducers (synchronous actions)
   reducers: {
-    // Logout action: Clear auth state
     logout: (state) => {
-      // Clear localStorage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
 
-      // Reset state to initial values
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
     },
 
-    // Clear error: Reset error state
     clearError: (state) => {
       state.error = null;
     }
   },
 
-  // Extra reducers handle actions from async thunks
   extraReducers: (builder) => {
-    // ====================================
-    // REGISTER USER
-    // ====================================
-
-    // When registration starts (request sent)
+    // Register user cases
     builder.addCase(registerUser.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
 
-    // When registration succeeds (got response)
     builder.addCase(registerUser.fulfilled, (state, action) => {
       state.loading = false;
       state.isAuthenticated = true;
@@ -154,19 +107,15 @@ const authSlice = createSlice({
       state.error = null;
     });
 
-    // When registration fails (error occurred)
     builder.addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = null;
       state.token = null;
-      state.error = action.payload; // Error message from rejectWithValue
+      state.error = action.payload;
     });
 
-    // ====================================
-    // LOGIN USER
-    // ====================================
-
+    // Login user cases
     builder.addCase(loginUser.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -190,8 +139,5 @@ const authSlice = createSlice({
   }
 });
 
-// Export action creators
 export const { logout, clearError } = authSlice.actions;
-
-// Export reducer (to be used in store)
 export default authSlice.reducer;

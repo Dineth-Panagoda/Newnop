@@ -1,39 +1,23 @@
-// ========================================
-// ISSUES SLICE
-// ========================================
-// Manages issues state (list, filters, pagination, stats)
+// Issues Slice - Manages issue state, filters, and pagination
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { API_URL } from '../../config/api';
 
-// ========================================
-// HELPER FUNCTION TO GET AUTH HEADERS
-// ========================================
-
-/**
- * Get authorization headers with JWT token
- * Token is required for all API requests to protected routes
- */
+// Get authorization headers with JWT token
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
   return {
     headers: {
-      Authorization: `Bearer ${token}` // Format: "Bearer <token>"
+      Authorization: `Bearer ${token}`
     }
   };
 };
 
-// ========================================
-// INITIAL STATE
-// ========================================
-
 const initialState = {
-  // Issues data
-  issues: [],              // Array of issue objects
-  currentIssue: null,      // Currently selected issue (for detail page)
+  issues: [],
+  currentIssue: null,
 
-  // Pagination
   pagination: {
     currentPage: 1,
     totalPages: 1,
@@ -43,15 +27,13 @@ const initialState = {
     hasPreviousPage: false
   },
 
-  // Filters
   filters: {
-    search: '',            // Search term
-    status: '',            // Filter by status
-    priority: '',          // Filter by priority
-    severity: ''           // Filter by severity
+    search: '',
+    status: '',
+    priority: '',
+    severity: ''
   },
 
-  // Statistics (issue counts by status)
   stats: {
     Open: 0,
     InProgress: 0,
@@ -60,25 +42,18 @@ const initialState = {
     total: 0
   },
 
-  // Loading states
-  loading: false,          // General loading state
-  statsLoading: false,     // Loading state for stats
-  actionLoading: false,    // Loading state for create/update/delete
-
-  // Error handling
+  loading: false,
+  statsLoading: false,
+  actionLoading: false,
   error: null
 };
 
-// ========================================
-// ASYNC THUNKS (API CALLS)
-// ========================================
+// Async thunks for API calls
 
-// Fetch all issues with filters and pagination
 export const fetchIssues = createAsyncThunk(
   'issues/fetchIssues',
   async ({ page = 1, limit = 10, search = '', status = '', priority = '', severity = '' }, { rejectWithValue }) => {
     try {
-      // Build query string from parameters
       const params = new URLSearchParams({
         page: page.toString(),
         limit: limit.toString(),
@@ -89,14 +64,13 @@ export const fetchIssues = createAsyncThunk(
       });
 
       const response = await axios.get(`${API_URL}/issues?${params}`, getAuthHeaders());
-      return response.data.data; // Returns { issues, pagination }
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch issues');
     }
   }
 );
 
-// Fetch single issue by ID
 export const fetchIssueById = createAsyncThunk(
   'issues/fetchIssueById',
   async (issueId, { rejectWithValue }) => {
@@ -109,20 +83,18 @@ export const fetchIssueById = createAsyncThunk(
   }
 );
 
-// Fetch issue statistics (counts by status)
 export const fetchIssueStats = createAsyncThunk(
   'issues/fetchStats',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_URL}/issues/stats`, getAuthHeaders());
-      return response.data.data; // Returns { counts, total }
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch stats');
     }
   }
 );
 
-// Create new issue
 export const createIssue = createAsyncThunk(
   'issues/createIssue',
   async (issueData, { rejectWithValue }) => {
@@ -135,7 +107,6 @@ export const createIssue = createAsyncThunk(
   }
 );
 
-// Update existing issue
 export const updateIssue = createAsyncThunk(
   'issues/updateIssue',
   async ({ id, data }, { rejectWithValue }) => {
@@ -148,37 +119,28 @@ export const updateIssue = createAsyncThunk(
   }
 );
 
-// Delete issue
 export const deleteIssue = createAsyncThunk(
   'issues/deleteIssue',
   async (issueId, { rejectWithValue }) => {
     try {
       await axios.delete(`${API_URL}/issues/${issueId}`, getAuthHeaders());
-      return issueId; // Return deleted issue ID
+      return issueId;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Failed to delete issue');
     }
   }
 );
 
-// ========================================
-// SLICE DEFINITION
-// ========================================
-
 const issuesSlice = createSlice({
   name: 'issues',
-
   initialState,
 
-  // Synchronous actions
   reducers: {
-    // Update filters
     setFilters: (state, action) => {
       state.filters = { ...state.filters, ...action.payload };
-      state.pagination.currentPage = 1; // Reset to first page when filters change
+      state.pagination.currentPage = 1;
     },
 
-    // Clear all filters
     clearFilters: (state) => {
       state.filters = {
         search: '',
@@ -189,28 +151,21 @@ const issuesSlice = createSlice({
       state.pagination.currentPage = 1;
     },
 
-    // Set current page
     setPage: (state, action) => {
       state.pagination.currentPage = action.payload;
     },
 
-    // Clear current issue
     clearCurrentIssue: (state) => {
       state.currentIssue = null;
     },
 
-    // Clear error
     clearError: (state) => {
       state.error = null;
     }
   },
 
-  // Handle async thunk actions
   extraReducers: (builder) => {
-    // ====================================
-    // FETCH ISSUES
-    // ====================================
-
+    // Fetch issues
     builder.addCase(fetchIssues.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -227,10 +182,7 @@ const issuesSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ====================================
-    // FETCH ISSUE BY ID
-    // ====================================
-
+    // Fetch issue by ID
     builder.addCase(fetchIssueById.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -246,10 +198,7 @@ const issuesSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ====================================
-    // FETCH STATS
-    // ====================================
-
+    // Fetch stats
     builder.addCase(fetchIssueStats.pending, (state) => {
       state.statsLoading = true;
     });
@@ -264,10 +213,7 @@ const issuesSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ====================================
-    // CREATE ISSUE
-    // ====================================
-
+    // Create issue
     builder.addCase(createIssue.pending, (state) => {
       state.actionLoading = true;
       state.error = null;
@@ -275,9 +221,7 @@ const issuesSlice = createSlice({
 
     builder.addCase(createIssue.fulfilled, (state, action) => {
       state.actionLoading = false;
-      // Add new issue to the beginning of the list
       state.issues.unshift(action.payload);
-      // Update total count
       state.pagination.totalCount += 1;
     });
 
@@ -286,10 +230,7 @@ const issuesSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ====================================
-    // UPDATE ISSUE
-    // ====================================
-
+    // Update issue
     builder.addCase(updateIssue.pending, (state) => {
       state.actionLoading = true;
       state.error = null;
@@ -297,12 +238,10 @@ const issuesSlice = createSlice({
 
     builder.addCase(updateIssue.fulfilled, (state, action) => {
       state.actionLoading = false;
-      // Update issue in the list
       const index = state.issues.findIndex(issue => issue.id === action.payload.id);
       if (index !== -1) {
         state.issues[index] = action.payload;
       }
-      // Update current issue if it's the same one
       if (state.currentIssue?.id === action.payload.id) {
         state.currentIssue = action.payload;
       }
@@ -313,10 +252,7 @@ const issuesSlice = createSlice({
       state.error = action.payload;
     });
 
-    // ====================================
-    // DELETE ISSUE
-    // ====================================
-
+    // Delete issue
     builder.addCase(deleteIssue.pending, (state) => {
       state.actionLoading = true;
       state.error = null;
@@ -324,11 +260,8 @@ const issuesSlice = createSlice({
 
     builder.addCase(deleteIssue.fulfilled, (state, action) => {
       state.actionLoading = false;
-      // Remove issue from list
       state.issues = state.issues.filter(issue => issue.id !== action.payload);
-      // Update total count
       state.pagination.totalCount -= 1;
-      // Clear current issue if it was deleted
       if (state.currentIssue?.id === action.payload) {
         state.currentIssue = null;
       }
@@ -341,7 +274,6 @@ const issuesSlice = createSlice({
   }
 });
 
-// Export actions
 export const {
   setFilters,
   clearFilters,
@@ -350,5 +282,4 @@ export const {
   clearError
 } = issuesSlice.actions;
 
-// Export reducer
 export default issuesSlice.reducer;

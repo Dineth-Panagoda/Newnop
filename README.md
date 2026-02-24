@@ -5,6 +5,7 @@ A full-stack issue tracking application built with React, Express, and MySQL. Th
 ## 🚀 Features
 
 ### Core Functionality
+
 - **User Authentication**: Secure registration and login with JWT-based authentication
 - **Issue Management**:
   - Create new issues with title, description, priority, severity, and status
@@ -20,6 +21,7 @@ A full-stack issue tracking application built with React, Express, and MySQL. Th
 ### Tech Stack
 
 #### Frontend
+
 - **React 18** - UI library
 - **Vite** - Build tool and dev server
 - **Redux Toolkit** - State management
@@ -28,6 +30,7 @@ A full-stack issue tracking application built with React, Express, and MySQL. Th
 - **Axios** - HTTP client
 
 #### Backend
+
 - **Express.js** - Web framework
 - **Prisma** - ORM for database operations
 - **MySQL** - Database
@@ -37,6 +40,7 @@ A full-stack issue tracking application built with React, Express, and MySQL. Th
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - **Node.js** (v16 or higher)
 - **npm** or **yarn**
 - **MySQL** (v8.0 or higher)
@@ -46,8 +50,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd issue-tracker
+git clone https://github.com/Dineth-Panagoda/Newnop.git
 ```
 
 ### 2. Backend Setup
@@ -78,7 +81,7 @@ DATABASE_URL="mysql://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME"
 JWT_SECRET="your-super-secret-jwt-key-change-this-in-production"
 
 # Server configuration
-PORT=5000
+PORT=5001
 NODE_ENV=development
 ```
 
@@ -112,28 +115,34 @@ npm install
 You'll need two terminal windows:
 
 **Terminal 1 - Backend:**
+
 ```bash
 cd server
 npm run dev
 ```
-Backend will run on `http://localhost:5000`
+
+Backend will run on `http://localhost:5001`
 
 **Terminal 2 - Frontend:**
+
 ```bash
 cd client
 npm run dev
 ```
+
 Frontend will run on `http://localhost:5173`
 
 ### Production Build
 
 **Backend:**
+
 ```bash
 cd server
 npm start
 ```
 
 **Frontend:**
+
 ```bash
 cd client
 npm run build
@@ -178,11 +187,13 @@ issue-tracker/
 ## 🔑 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - Register a new user
 - `POST /api/auth/login` - Login user
 - `GET /api/auth/me` - Get current user (requires auth)
 
 ### Issues (All require authentication)
+
 - `GET /api/issues` - Get all issues (with pagination, search, filters)
 - `GET /api/issues/stats` - Get issue statistics by status
 - `GET /api/issues/:id` - Get single issue
@@ -191,6 +202,7 @@ issue-tracker/
 - `DELETE /api/issues/:id` - Delete issue
 
 ### Query Parameters for GET /api/issues
+
 - `page` - Page number (default: 1)
 - `limit` - Items per page (default: 10)
 - `search` - Search term for title/description
@@ -201,28 +213,33 @@ issue-tracker/
 ## 🎨 Key Features Explained
 
 ### Authentication
+
 - Uses JWT tokens for stateless authentication
 - Passwords are hashed using bcrypt before storage
 - Token is stored in localStorage and sent with each API request
 - Protected routes redirect to login if user is not authenticated
 
 ### Redux State Management
+
 - **Auth Slice**: Manages user authentication state
 - **Issues Slice**: Manages issues, filters, pagination, and statistics
 - Uses Redux Toolkit for simplified Redux logic
 - Async operations handled with createAsyncThunk
 
 ### Search & Filter
+
 - Search input is debounced (500ms delay) to optimize API calls
 - Multiple filters can be applied simultaneously
 - Filters persist in Redux state
 
 ### Pagination
+
 - Server-side pagination for better performance
 - Shows current page, total pages, and total count
 - Next/Previous navigation
 
 ### Export Functionality
+
 - Export current issue list to CSV or JSON
 - Downloads file directly to user's computer
 - Includes all issue fields
@@ -240,95 +257,69 @@ issue-tracker/
 ### Manual Testing Steps
 
 1. **Register a new user**
-   - Go to `/register`
-   - Create an account with email and password
-
+  - Go to `/register`
+  - Create an account with email and password
 2. **Login**
-   - Login with your credentials
-   - You should be redirected to the dashboard
-
+  - Login with your credentials
+  - You should be redirected to the dashboard
 3. **Create an issue**
-   - Click "Create Issue" button
-   - Fill in the form and submit
-
+  - Click "Create Issue" button
+  - Fill in the form and submit
 4. **View issues**
-   - See the issue in the dashboard
-   - Check status counts update correctly
-
+  - See the issue in the dashboard
+  - Check status counts update correctly
 5. **Search and filter**
-   - Use search bar to find issues
-   - Apply status/priority/severity filters
-
+  - Use search bar to find issues
+  - Apply status/priority/severity filters
 6. **Edit an issue**
-   - Click on an issue to view details
-   - Click "Edit" and modify fields
-   - Save changes
-
+  - Click on an issue to view details
+  - Click "Edit" and modify fields
+  - Save changes
 7. **Change status**
-   - Mark issue as Resolved or Closed
-   - Confirm the action in modal
-
+  - Mark issue as Resolved or Closed
+  - Confirm the action in modal
 8. **Delete an issue**
-   - Click "Delete Issue"
-   - Confirm deletion in modal
-
+  - Click "Delete Issue"
+  - Confirm deletion in modal
 9. **Export data**
-   - Click "Export CSV" or "Export JSON"
-   - File should download automatically
-
-## 🚢 Deployment
-
-### Backend Deployment (Railway)
-
-1. Create account on [Railway](https://railway.app)
-2. Create a new project
-3. Add MySQL database service
-4. Add environment variables:
-   - `DATABASE_URL` (from Railway MySQL service)
-   - `JWT_SECRET`
-   - `PORT`
-   - `NODE_ENV=production`
-5. Deploy from GitHub repository
-
-### Frontend Deployment (Vercel)
-
-1. Create account on [Vercel](https://vercel.com)
-2. Import GitHub repository
-3. Set root directory to `client`
-4. Add environment variable:
-   - `VITE_API_URL` (backend URL from Railway)
-5. Deploy
+  - Click "Export CSV" or "Export JSON"
+  - File should download automatically
 
 ## 📝 Environment Variables
 
 ### Backend (.env)
+
 ```env
 DATABASE_URL="mysql://user:password@host:port/database"
 JWT_SECRET="your-secret-key"
-PORT=5000
+PORT=5001
 NODE_ENV=development
 CLIENT_URL=http://localhost:5173
 ```
 
 ### Frontend (if needed)
+
 ```env
-VITE_API_URL=http://localhost:5000
+VITE_API_URL=http://localhost:5001
 ```
 
 ## 🐛 Troubleshooting
 
 ### Database connection issues
+
 - Verify MySQL is running
 - Check DATABASE_URL format
 - Ensure database exists
 - Run migrations: `npm run prisma:migrate`
 
 ### Frontend not connecting to backend
+
 - Check backend is running on correct port
 - Verify CORS settings in server.js
 - Check API proxy in vite.config.js
 
 ### Authentication issues
+
 - Clear localStorage and try logging in again
 - Verify JWT_SECRET is set correctly
 - Check token expiration (default: 7 days)
@@ -343,7 +334,7 @@ VITE_API_URL=http://localhost:5000
 
 ## 👤 Author
 
-Your Name - Assignment for NewNop
+Dineth Panagoda - Assignment for NewNop
 
 ## 📄 License
 

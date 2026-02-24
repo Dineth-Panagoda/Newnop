@@ -1,7 +1,4 @@
-// ========================================
-// ISSUE ROUTES
-// ========================================
-// Handles CRUD operations for issues with search, filter, and pagination
+// Issue Routes - CRUD operations with search, filtering, and pagination
 
 const express = require('express');
 const router = express.Router();
@@ -10,34 +7,18 @@ const authenticateToken = require('../middleware/auth');
 
 const prisma = new PrismaClient();
 
-// ====================================
-// APPLY AUTHENTICATION TO ALL ROUTES
-// ====================================
-// All routes in this file require authentication
-// This middleware runs before any route handler
+// Apply authentication to all routes
 router.use(authenticateToken);
 
-// ========================================
-// GET STATUS COUNTS
-// ========================================
-// GET /api/issues/stats
-// Returns count of issues grouped by status (Open, InProgress, Resolved, Closed)
+// GET /api/issues/stats - Get issue counts by status
 router.get('/stats', async (req, res) => {
   try {
-    // Use Prisma's groupBy to count issues by status
-    // This is more efficient than fetching all issues and counting in JavaScript
     const statusCounts = await prisma.issue.groupBy({
-      by: ['status'], // Group by status field
-      _count: {
-        status: true // Count the number of issues in each group
-      },
-      where: {
-        userId: req.user.userId // Only count issues belonging to current user
-      }
+      by: ['status'],
+      _count: { status: true },
+      where: { userId: req.user.userId }
     });
 
-    // Transform the result into a more readable format
-    // Convert array of objects into a single object with status as keys
     const counts = {
       Open: 0,
       InProgress: 0,
@@ -45,20 +26,15 @@ router.get('/stats', async (req, res) => {
       Closed: 0
     };
 
-    // Map the database results to our counts object
     statusCounts.forEach(item => {
       counts[item.status] = item._count.status;
     });
 
-    // Calculate total count
     const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
 
     res.status(200).json({
       success: true,
-      data: {
-        counts,
-        total
-      }
+      data: { counts, total }
     });
 
   } catch (error) {
@@ -71,84 +47,36 @@ router.get('/stats', async (req, res) => {
   }
 });
 
-// ========================================
-// GET ALL ISSUES (WITH SEARCH, FILTER, PAGINATION)
-// ========================================
-// GET /api/issues
-// Query parameters:
-//   - page: Page number (default: 1)
-//   - limit: Items per page (default: 10)
-//   - search: Search term for title/description
-//   - status: Filter by status (Open, InProgress, Resolved, Closed)
-//   - priority: Filter by priority (Low, Medium, High, Critical)
-//   - severity: Filter by severity (Low, Medium, High, Critical)
+// GET /api/issues - Get all issues with optional filters and pagination
 router.get('/', async (req, res) => {
   try {
-    // ====================================
-    // EXTRACT AND PARSE QUERY PARAMETERS
-    // ====================================
-
-    // Pagination parameters
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
-    const skip = (page - 1) * limit; // Calculate how many items to skip
-
-    // Search and filter parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
     const { search, status, priority, severity } = req.query;
 
-    // ====================================
-    // BUILD WHERE CLAUSE
-    // ====================================
-    // This object defines the conditions for filtering issues
-
+    // Build filter conditions
     const where = {
-      userId: req.user.userId // Only show issues belonging to current user
+      userId: req.user.userId
     };
 
-    // Add search filter if search term is provided
-    // Search in both title and description (case-insensitive by default in MySQL)
+    // Search in title or description
     if (search) {
       where.OR = [
-        {
-          title: {
-            contains: search // MySQL LIKE %search% (case-insensitive with default collation)
-          }
-        },
-        {
-          description: {
-            contains: search
-          }
-        }
+        { title: { contains: search } },
+        { description: { contains: search } }
       ];
     }
 
-    // Add status filter if provided
-    if (status) {
-      where.status = status;
-    }
+    if (status) where.status = status;
+    if (priority) where.priority = priority;
+    if (severity) where.severity = severity;
 
-    // Add priority filter if provided
-    if (priority) {
-      where.priority = priority;
-    }
-
-    // Add severity filter if provided
-    if (severity) {
-      where.severity = severity;
-    }
-
-    // ====================================
-    // FETCH ISSUES FROM DATABASE
-    // ====================================
-
-    // Fetch issues with pagination
     const issues = await prisma.issue.findMany({
       where,
-      skip, // Skip items for pagination
-      take: limit, // Limit number of items
-      orderBy: {
-        createdAt: 'desc' // Most recent issues first
-      },
+      skip,
+      take: limit,
+      orderBy: { createdAt: 'desc' },
       include: {
         user: {
           select: {
@@ -160,15 +88,8 @@ router.get('/', async (req, res) => {
       }
     });
 
-    // Get total count of issues matching the filters (for pagination info)
     const totalCount = await prisma.issue.count({ where });
-
-    // Calculate total pages
     const totalPages = Math.ceil(totalCount / limit);
-
-    // ====================================
-    // SEND RESPONSE
-    // ====================================
 
     res.status(200).json({
       success: true,
@@ -195,15 +116,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ========================================
-// GET SINGLE ISSUE BY ID
-// ========================================
-// GET /api/issues/:id
+// GET /api/issues/:id - Get single issue
 router.get('/:id', async (req, res) => {
   try {
     const issueId = parseInt(req.params.id);
 
-    // Validate ID
     if (isNaN(issueId)) {
       return res.status(400).json({
         success: false,
@@ -211,7 +128,6 @@ router.get('/:id', async (req, res) => {
       });
     }
 
-    // Fetch issue with user details
     const issue = await prisma.issue.findUnique({
       where: { id: issueId },
       include: {
@@ -225,7 +141,6 @@ router.get('/:id', async (req, res) => {
       }
     });
 
-    // Check if issue exists
     if (!issue) {
       return res.status(404).json({
         success: false,
@@ -233,7 +148,7 @@ router.get('/:id', async (req, res) => {
       });
     }
 
-    // Check if user owns this issue
+    // Verify user owns this issue
     if (issue.userId !== req.user.userId) {
       return res.status(403).json({
         success: false,
@@ -256,17 +171,10 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ========================================
-// CREATE NEW ISSUE
-// ========================================
-// POST /api/issues
+// POST /api/issues - Create new issue
 router.post('/', async (req, res) => {
   try {
     const { title, description, status, priority, severity } = req.body;
-
-    // ====================================
-    // INPUT VALIDATION
-    // ====================================
 
     if (!title || !description) {
       return res.status(400).json({
@@ -275,7 +183,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // Validate title length
     if (title.trim().length < 3) {
       return res.status(400).json({
         success: false,
@@ -290,7 +197,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // Validate description length
     if (description.trim().length < 10) {
       return res.status(400).json({
         success: false,
@@ -305,7 +211,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // Validate status if provided
     const validStatuses = ['Open', 'InProgress', 'Resolved', 'Closed'];
     if (status && !validStatuses.includes(status)) {
       return res.status(400).json({
@@ -314,7 +219,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // Validate priority if provided
     const validPriorities = ['Low', 'Medium', 'High', 'Critical'];
     if (priority && !validPriorities.includes(priority)) {
       return res.status(400).json({
@@ -323,7 +227,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // Validate severity if provided
     const validSeverities = ['Low', 'Medium', 'High', 'Critical'];
     if (severity && !validSeverities.includes(severity)) {
       return res.status(400).json({
@@ -332,18 +235,14 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // ====================================
-    // CREATE ISSUE
-    // ====================================
-
     const newIssue = await prisma.issue.create({
       data: {
         title: title.trim(),
         description: description.trim(),
-        status: status || 'Open', // Default to 'Open' if not provided
-        priority: priority || 'Medium', // Default to 'Medium' if not provided
-        severity: severity || 'Medium', // Default to 'Medium' if not provided
-        userId: req.user.userId // Associate issue with current user
+        status: status || 'Open',
+        priority: priority || 'Medium',
+        severity: severity || 'Medium',
+        userId: req.user.userId
       },
       include: {
         user: {
@@ -372,26 +271,18 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ========================================
-// UPDATE ISSUE
-// ========================================
-// PUT /api/issues/:id
+// PUT /api/issues/:id - Update issue
 router.put('/:id', async (req, res) => {
   try {
     const issueId = parseInt(req.params.id);
     const { title, description, status, priority, severity } = req.body;
 
-    // Validate ID
     if (isNaN(issueId)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid issue ID'
       });
     }
-
-    // ====================================
-    // CHECK IF ISSUE EXISTS AND USER OWNS IT
-    // ====================================
 
     const existingIssue = await prisma.issue.findUnique({
       where: { id: issueId }
@@ -404,7 +295,7 @@ router.put('/:id', async (req, res) => {
       });
     }
 
-    // Check ownership
+    // Verify user owns this issue
     if (existingIssue.userId !== req.user.userId) {
       return res.status(403).json({
         success: false,
@@ -412,11 +303,6 @@ router.put('/:id', async (req, res) => {
       });
     }
 
-    // ====================================
-    // INPUT VALIDATION
-    // ====================================
-
-    // Build update data object (only include fields that are provided)
     const updateData = {};
 
     if (title !== undefined) {
@@ -484,10 +370,6 @@ router.put('/:id', async (req, res) => {
       updateData.severity = severity;
     }
 
-    // ====================================
-    // UPDATE ISSUE
-    // ====================================
-
     const updatedIssue = await prisma.issue.update({
       where: { id: issueId },
       data: updateData,
@@ -518,25 +400,17 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ========================================
-// DELETE ISSUE
-// ========================================
-// DELETE /api/issues/:id
+// DELETE /api/issues/:id - Delete issue
 router.delete('/:id', async (req, res) => {
   try {
     const issueId = parseInt(req.params.id);
 
-    // Validate ID
     if (isNaN(issueId)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid issue ID'
       });
     }
-
-    // ====================================
-    // CHECK IF ISSUE EXISTS AND USER OWNS IT
-    // ====================================
 
     const existingIssue = await prisma.issue.findUnique({
       where: { id: issueId }
@@ -549,17 +423,13 @@ router.delete('/:id', async (req, res) => {
       });
     }
 
-    // Check ownership
+    // Verify user owns this issue
     if (existingIssue.userId !== req.user.userId) {
       return res.status(403).json({
         success: false,
         message: 'You do not have permission to delete this issue'
       });
     }
-
-    // ====================================
-    // DELETE ISSUE
-    // ====================================
 
     await prisma.issue.delete({
       where: { id: issueId }

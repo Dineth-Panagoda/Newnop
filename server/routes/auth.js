@@ -1,7 +1,4 @@
-// ========================================
-// AUTHENTICATION ROUTES
-// ========================================
-// Handles user registration and login
+// Authentication Routes - Handles user registration and login
 
 const express = require('express');
 const router = express.Router();
@@ -11,21 +8,12 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-// ========================================
-// REGISTER NEW USER
-// ========================================
-// POST /api/auth/register
-// Creates a new user account with hashed password
+// POST /api/auth/register - Create new user account
 router.post('/register', async (req, res) => {
   try {
-    // Extract data from request body
     const { email, password, name } = req.body;
 
-    // ====================================
-    // INPUT VALIDATION
-    // ====================================
-
-    // Check if required fields are provided
+    // Validate required fields
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -33,7 +21,6 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Validate email format using regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -42,7 +29,6 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Validate password strength (minimum 6 characters)
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
@@ -50,16 +36,11 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // ====================================
-    // CHECK IF USER ALREADY EXISTS
-    // ====================================
-
-    // Search for existing user with this email
+    // Check if user already exists
     const existingUser = await prisma.user.findUnique({
       where: { email }
     });
 
-    // If user exists, return error
     if (existingUser) {
       return res.status(409).json({
         success: false,
@@ -67,28 +48,17 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // ====================================
-    // HASH PASSWORD
-    // ====================================
-
-    // Generate a salt (random data added to password before hashing)
-    // Salt rounds = 10 means the hashing algorithm will run 2^10 iterations
-    // Higher number = more secure but slower
+    // Hash password with bcrypt (salt rounds = 10)
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // ====================================
-    // CREATE NEW USER
-    // ====================================
-
-    // Store user in database with hashed password (never store plain passwords!)
+    // Create user in database
     const newUser = await prisma.user.create({
       data: {
         email,
         password: hashedPassword,
-        name: name || null // Name is optional
+        name: name || null
       },
-      // Select which fields to return (exclude password for security)
       select: {
         id: true,
         email: true,
@@ -97,26 +67,17 @@ router.post('/register', async (req, res) => {
       }
     });
 
-    // ====================================
-    // GENERATE JWT TOKEN
-    // ====================================
-
-    // Create JWT payload (data to be encoded in the token)
+    // Generate JWT token (expires in 7 days)
     const payload = {
       userId: newUser.id,
       email: newUser.email
     };
 
-    // Sign the token with secret key and set expiration
     const token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
-      { expiresIn: '7d' } // Token expires in 7 days
+      { expiresIn: '7d' }
     );
-
-    // ====================================
-    // SEND RESPONSE
-    // ====================================
 
     res.status(201).json({
       success: true,
@@ -137,19 +98,10 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ========================================
-// LOGIN USER
-// ========================================
-// POST /api/auth/login
-// Authenticates user and returns JWT token
+// POST /api/auth/login - Authenticate user and return JWT
 router.post('/login', async (req, res) => {
   try {
-    // Extract credentials from request body
     const { email, password } = req.body;
-
-    // ====================================
-    // INPUT VALIDATION
-    // ====================================
 
     if (!email || !password) {
       return res.status(400).json({
@@ -158,17 +110,11 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // ====================================
-    // FIND USER
-    // ====================================
-
-    // Search for user by email
     const user = await prisma.user.findUnique({
       where: { email }
     });
 
-    // If user doesn't exist, return error
-    // Note: We use a generic message to avoid revealing if email exists (security best practice)
+    // Use generic message to avoid revealing if email exists (security best practice)
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -176,12 +122,7 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // ====================================
-    // VERIFY PASSWORD
-    // ====================================
-
-    // Compare provided password with hashed password in database
-    // bcrypt.compare() hashes the input password and compares it with the stored hash
+    // Verify password with bcrypt
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -191,10 +132,7 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // ====================================
-    // GENERATE JWT TOKEN
-    // ====================================
-
+    // Generate JWT token
     const payload = {
       userId: user.id,
       email: user.email
@@ -206,11 +144,7 @@ router.post('/login', async (req, res) => {
       { expiresIn: '7d' }
     );
 
-    // ====================================
-    // SEND RESPONSE
-    // ====================================
-
-    // Remove password from user object before sending
+    // Remove password from response
     const { password: _, ...userWithoutPassword } = user;
 
     res.status(200).json({
@@ -232,16 +166,11 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ========================================
-// GET CURRENT USER (OPTIONAL - USEFUL FOR FRONTEND)
-// ========================================
-// GET /api/auth/me
-// Returns current user's info based on JWT token
+// GET /api/auth/me - Get current user info from JWT
 const authenticateToken = require('../middleware/auth');
 
 router.get('/me', authenticateToken, async (req, res) => {
   try {
-    // req.user is set by authenticateToken middleware
     const user = await prisma.user.findUnique({
       where: { id: req.user.userId },
       select: {
