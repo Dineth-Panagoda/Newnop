@@ -163,12 +163,6 @@
   padding: 0.75rem 1rem;
 }
 
-/* Add padding to body to account for fixed navbar */
-body {
-  padding-top: 64px;
-  transition: padding-top 300ms ease-in-out;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .navLinks {
