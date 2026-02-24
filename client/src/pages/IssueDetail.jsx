@@ -327,7 +327,7 @@ const IssueDetail = () => {
           <>
             <div style={{ marginBottom: 'var(--spacing-lg)' }}>
                 <h1 className="title">
-                  <span className="issueId">#{currentIssue.id}</span> {currentIssue.title}
+                  #{currentIssue.id} - {currentIssue.title}
                 </h1>
               <p style={{ color: 'var(--gray-600)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
                 {currentIssue.description}
@@ -362,14 +362,7 @@ const IssueDetail = () => {
               </div>
 
               <div className="leftButtons">
-                {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
-                  <Button
-                    variant="success"
-                    onClick={() => setShowResolveModal(true)}
-                  >
-                    Mark as Resolved
-                  </Button>
-                )}
+                
 
                 {currentIssue.status !== 'Closed' && (
                   <Button
@@ -378,7 +371,17 @@ const IssueDetail = () => {
                   >
                     Mark as Closed
                   </Button>
-                )}
+                  )}
+                  
+                  {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
+                    <Button
+                      variant="primary"
+                      onClick={() => setShowResolveModal(true)}
+                    >
+                      Mark as Resolved
+                    </Button>
+                    
+                  )}
               </div>
             </div>
           </>

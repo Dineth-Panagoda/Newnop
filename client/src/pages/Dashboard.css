@@ -82,6 +82,12 @@
   flex-wrap: wrap;
 }
 
+.resultCount {
+  font-size: 0.875rem;
+  color: #616161;
+  font-weight: 500;
+}
+
 .exportButtons {
   display: flex;
   gap: 0.5rem;
@@ -102,7 +108,7 @@
 
 .issueCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(60, 255, 0, 0.08), 0 2px 4px -1px rgba(0, 255, 26, 0.04);
+  box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 255, 26, 0.04);
 }
 
 .issueHeader {

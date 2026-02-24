@@ -260,7 +260,10 @@ const Dashboard = () => {
         </div>
 
         <div className="actionsRow">
-          
+          {/* Result count */}
+          <div className="resultCount">
+            {pagination.totalCount} {pagination.totalCount === 1 ? 'result' : 'results'}
+          </div>
 
           {/* Export buttons */}
           <div className="exportButtons">
