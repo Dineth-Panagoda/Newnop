@@ -2,10 +2,10 @@
    DASHBOARD PAGE STYLES - ACRU INSPIRED
    ======================================== */
 
-.container {
+.dashboardContainer {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
+  margin: 80px auto;
+  width: 90%;
 }
 
 .header {

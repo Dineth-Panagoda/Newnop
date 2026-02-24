@@ -113,7 +113,6 @@ body {
 /* Root Container */
 #root {
   min-height: 100vh;
-  padding: 0 20px;
 }
 
 /* Scrollbar Styling */
@@ -186,12 +185,6 @@ h4 {
 }
 
 /* Utility Classes */
-.container {
-  max-width: 1200px;
-  margin: 80px auto;
-  padding: 0 var(--spacing-md);
-}
-
 .text-center {
   text-align: center;
 }

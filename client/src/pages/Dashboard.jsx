@@ -315,7 +315,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container">
+    <div className="dashboardContainer">
       {/* Success notification */}
       {successNotification && (
         <div className={`successNotification ${isNotificationClosing ? 'closing' : ''}`}>

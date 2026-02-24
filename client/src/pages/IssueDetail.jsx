@@ -222,7 +222,7 @@ const IssueDetail = () => {
   // Show error if issue not found
   if (!currentIssue && !loading) {
     return (
-      <div className="container">
+      <div className="issueDetailContainer">
         <div className="errorAlert">Issue not found</div>
         <Button onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
       </div>
@@ -230,7 +230,7 @@ const IssueDetail = () => {
   }
 
   return (
-    <div className="container">
+    <div className="issueDetailContainer">
       {/* Success notification */}
       {successMessage && (
         <div className={`successNotification ${isNotificationClosing ? 'closing' : ''}`}>
