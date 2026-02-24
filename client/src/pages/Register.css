@@ -8,12 +8,15 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background: linear-gradient(135deg, #76FF03 0%, #64DD17 100%);
+  position: relative;
+  background: #1a3d1a;
 }
 
 .registerCard {
   max-width: 440px;
   width: 100%;
+  position: relative;
+  z-index: 10;
 }
 
 .title {
@@ -54,11 +57,11 @@
 }
 
 .link {
-  color: #76FF03;
+  color: #000000;
   font-weight: 500;
   text-decoration: none;
 }
 
 .link:hover {
-  color: #64DD17;
+  color: #48a90b;
 }

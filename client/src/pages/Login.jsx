@@ -11,6 +11,7 @@ import { loginUser, clearError } from '../redux/slices/authSlice';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import Card from '../components/common/Card';
+import Aurora from '../components/common/Aurora';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,7 @@ const Login = () => {
 
   return (
     <div className="pageContainer">
+      <Aurora colorStops={["#00c7fc", "#7cff67", "#ffffff"]} amplitude={0.5} blend={1} />
       <Card className="loginCard">
         <h1 className="title">Welcome Back</h1>
         <p className="subtitle">Sign in to your account to continue</p>
