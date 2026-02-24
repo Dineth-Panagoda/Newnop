@@ -20,6 +20,8 @@ import Select from '../components/common/Select';
 import Badge from '../components/common/Badge';
 import Loader from '../components/common/Loader';
 import { ConfirmModal } from '../components/common/Modal';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 const IssueDetail = () => {
   const { id } = useParams();
@@ -328,6 +330,7 @@ const IssueDetail = () => {
                 onClick={() => setShowDeleteModal(true)}
                 disabled={actionLoading}
               >
+                <DeleteOutlinedIcon />
                 Delete Issue
               </Button>
 
@@ -356,7 +359,8 @@ const IssueDetail = () => {
                   #{currentIssue.id} - {currentIssue.title}
                 </h1>
                 {!isEditing && (
-                  <Button variant="outline" size="small" onClick={() => setIsEditing(true)}>
+                    <Button variant="outline" size="small" onClick={() => setIsEditing(true)}>
+                      <EditOutlinedIcon style={{fontSize:'20px'}}/>
                     Edit
                   </Button>
                 )}
@@ -388,7 +392,8 @@ const IssueDetail = () => {
                 <Button
                   variant="danger"
                   onClick={() => setShowDeleteModal(true)}
-                >
+                  >
+                    <DeleteOutlinedIcon />
                   Delete Issue
                 </Button>
               </div>

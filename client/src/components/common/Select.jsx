@@ -5,6 +5,7 @@
 
 import './Select.css';
 import classNames from '../../utils/classNames';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
 /**
  * Select component props:
@@ -53,32 +54,35 @@ const Select = ({
         </label>
       )}
 
-      <select
-        id={name}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        disabled={disabled}
-        className={selectClasses}
-        {...rest}
-      >
-        {/* Placeholder option */}
-        <option value="">{placeholder}</option>
+      <div className="selectWrapper">
+        <select
+          id={name}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          disabled={disabled}
+          className={selectClasses}
+          {...rest}
+        >
+          {/* Placeholder option */}
+          <option value="">{placeholder}</option>
 
-        {/* Render options */}
-        {options.map((option, index) => {
-          // Handle both object and string options
-          const optionValue = typeof option === 'string' ? option : option.value;
-          const optionLabel = typeof option === 'string' ? option : option.label;
+          {/* Render options */}
+          {options.map((option, index) => {
+            // Handle both object and string options
+            const optionValue = typeof option === 'string' ? option : option.value;
+            const optionLabel = typeof option === 'string' ? option : option.label;
 
-          return (
-            <option key={index} value={optionValue}>
-              {optionLabel}
-            </option>
-          );
-        })}
-      </select>
+            return (
+              <option key={index} value={optionValue}>
+                {optionLabel}
+              </option>
+            );
+          })}
+        </select>
+        <KeyboardArrowDownOutlinedIcon className="selectArrow" />
+      </div>
 
       {error && <span className="errorMessage">{error}</span>}
     </div>

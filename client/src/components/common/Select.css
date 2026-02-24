@@ -8,7 +8,11 @@
   flex-direction: column;
   gap: 0.375rem;
   width: 100%;
+}
+
+.selectWrapper {
   position: relative;
+  width: 100%;
 }
 
 /* Label */
@@ -38,15 +42,14 @@
 }
 
 /* Custom dropdown arrow */
-.selectContainer::after {
-  content: '⌄';
+.selectArrow {
   position: absolute;
   right: 1rem;
-  bottom: 10px;
-  font-size: 20px;
-  font-weight: 1000;
+  top: 50%;
+  transform: translateY(-50%);
   color: #616161;
   pointer-events: none;
+  font-size: 20px !important;
 }
 
 .select:focus {

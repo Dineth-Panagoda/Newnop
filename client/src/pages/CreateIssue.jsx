@@ -106,7 +106,9 @@ const CreateIssue = () => {
 
   return (
     <div className="container">
-      <h1 className="title">Create New Issue</h1>
+      <div className="header">
+        <h1 className="title">Create New Issue</h1>
+      </div>
 
       <Card>
         {/* Show error if exists */}

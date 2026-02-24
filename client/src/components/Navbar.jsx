@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import './Navbar.css';
 import { logout } from '../redux/slices/authSlice';
 import Button from './common/Button';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const Navbar = () => {
             <div className="userMenu">
               <div className="userMenuTrigger">
                 <span className="userName">{user.name || user.email}</span>
-                <span className="dropdownArrow">▼</span>
+                <KeyboardArrowDownOutlinedIcon className="dropdownArrow" />
               </div>
 
               <div className="userDropdown">

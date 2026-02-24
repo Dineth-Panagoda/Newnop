@@ -20,6 +20,7 @@ import Input from '../components/common/Input';
 import Select from '../components/common/Select';
 import Badge from '../components/common/Badge';
 import Loader from '../components/common/Loader';
+import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
 
 // Custom hook for count-up animation
 const useCountUp = (end, duration = 1000) => {
@@ -389,6 +390,7 @@ const Dashboard = () => {
               size="small"
               disabled={issues.length === 0}
             >
+              <IosShareRoundedIcon style={{ fontSize:'20px'}}/>
               Export List
             </Button>
             <div className="exportDropdown">
