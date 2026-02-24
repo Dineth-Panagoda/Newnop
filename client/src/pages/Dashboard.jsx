@@ -334,22 +334,22 @@ const Dashboard = () => {
         {/* Statistics Cards */}
         <div className="statsGrid">
           <StatCard
-            value={stats.Open || 0}
+            value={stats.counts?.Open || 0}
             label="Open"
             isLoading={statsLoading}
           />
           <StatCard
-            value={stats.InProgress || 0}
+            value={stats.counts?.InProgress || 0}
             label="In Progress"
             isLoading={statsLoading}
           />
           <StatCard
-            value={stats.Resolved || 0}
+            value={stats.counts?.Resolved || 0}
             label="Resolved"
             isLoading={statsLoading}
           />
           <StatCard
-            value={stats.Closed || 0}
+            value={stats.counts?.Closed || 0}
             label="Closed"
             isLoading={statsLoading}
           />
