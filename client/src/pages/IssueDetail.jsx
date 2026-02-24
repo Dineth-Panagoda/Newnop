@@ -213,7 +213,7 @@ const IssueDetail = () => {
           
           <div className="badges">
             <Badge variant={currentIssue.status} size="large">
-              {currentIssue.status}
+              Status: {currentIssue.status}
             </Badge>
             <Badge variant={currentIssue.priority} size="large">
               Priority: {currentIssue.priority}

@@ -286,10 +286,12 @@ const Dashboard = () => {
             placeholder="All Severities"
           />
 
-          {/* Clear filters button */}
-          <Button variant="ghost" onClick={handleClearFilters}>
-            Clear
-          </Button>
+          {/* Clear filters button - only show when filters are active */}
+          {(searchInput || filters.status || filters.priority || filters.severity) && (
+            <Button variant="ghost" onClick={handleClearFilters}>
+              Clear
+            </Button>
+          )}
         </div>
 
         <div className="actionsRow">
