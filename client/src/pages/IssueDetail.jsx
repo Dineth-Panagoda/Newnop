@@ -123,12 +123,16 @@ const IssueDetail = () => {
       errors.title = 'Title is required';
     } else if (formData.title.trim().length < 3) {
       errors.title = 'Title must be at least 3 characters';
+    } else if (formData.title.trim().length > 255) {
+      errors.title = 'Title must not exceed 255 characters';
     }
 
     if (!formData.description.trim()) {
       errors.description = 'Description is required';
     } else if (formData.description.trim().length < 10) {
       errors.description = 'Description must be at least 10 characters';
+    } else if (formData.description.trim().length > 5000) {
+      errors.description = 'Description must not exceed 5000 characters';
     }
 
     setFormErrors(errors);
@@ -280,6 +284,7 @@ const IssueDetail = () => {
               value={formData.title}
               onChange={handleChange}
               error={formErrors.title}
+              maxLength={255}
               required
             />
 
@@ -289,6 +294,7 @@ const IssueDetail = () => {
               value={formData.description}
               onChange={handleChange}
               error={formErrors.description}
+              maxLength={5000}
               multiline
               rows={8}
               required

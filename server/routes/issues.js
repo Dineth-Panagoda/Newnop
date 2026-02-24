@@ -283,11 +283,25 @@ router.post('/', async (req, res) => {
       });
     }
 
+    if (title.trim().length > 255) {
+      return res.status(400).json({
+        success: false,
+        message: 'Title must not exceed 255 characters'
+      });
+    }
+
     // Validate description length
     if (description.trim().length < 10) {
       return res.status(400).json({
         success: false,
         message: 'Description must be at least 10 characters long'
+      });
+    }
+
+    if (description.trim().length > 5000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Description must not exceed 5000 characters'
       });
     }
 
@@ -412,6 +426,12 @@ router.put('/:id', async (req, res) => {
           message: 'Title must be at least 3 characters long'
         });
       }
+      if (title.trim().length > 255) {
+        return res.status(400).json({
+          success: false,
+          message: 'Title must not exceed 255 characters'
+        });
+      }
       updateData.title = title.trim();
     }
 
@@ -420,6 +440,12 @@ router.put('/:id', async (req, res) => {
         return res.status(400).json({
           success: false,
           message: 'Description must be at least 10 characters long'
+        });
+      }
+      if (description.trim().length > 5000) {
+        return res.status(400).json({
+          success: false,
+          message: 'Description must not exceed 5000 characters'
         });
       }
       updateData.description = description.trim();

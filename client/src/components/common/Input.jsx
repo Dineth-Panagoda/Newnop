@@ -21,6 +21,8 @@ import classNames from '../../utils/classNames';
  * @param {boolean} multiline - Render as textarea instead of input
  * @param {number} rows - Number of rows for textarea
  * @param {boolean} showFilledState - Show green border when field has value
+ * @param {number} maxLength - Maximum character length (shows counter)
+ * @param {boolean} showCharCount - Force show character counter even without maxLength
  */
 const Input = ({
   label,
@@ -36,6 +38,8 @@ const Input = ({
   multiline = false,
   rows = 3,
   showFilledState = false,
+  maxLength,
+  showCharCount = false,
   className,
   ...rest
 }) => {
@@ -52,14 +56,35 @@ const Input = ({
     required && 'label-required'
   );
 
+  // Calculate character count
+  const currentLength = value ? value.length : 0;
+  const showCounter = maxLength || showCharCount;
+  const isNearLimit = maxLength && currentLength > maxLength * 0.8;
+  const isAtLimit = maxLength && currentLength >= maxLength;
+
   return (
     <div className="inputContainer">
-      {/* Render label if provided */}
-      {label && (
-        <label htmlFor={name} className={labelClasses}>
-          {label}
-        </label>
-      )}
+      {/* Render label with character counter */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {label && (
+          <label htmlFor={name} className={labelClasses}>
+            {label}
+          </label>
+        )}
+
+        {showCounter && (
+          <span
+            className="charCounter"
+            style={{
+              fontSize: '0.875rem',
+              color: isAtLimit ? 'var(--red-600)' : isNearLimit ? 'var(--orange-600)' : 'var(--gray-500)',
+              fontWeight: isAtLimit ? '600' : '400'
+            }}
+          >
+            {currentLength}{maxLength && `/${maxLength}`}
+          </span>
+        )}
+      </div>
 
       {/* Render textarea or input based on multiline prop */}
       {multiline ? (
@@ -72,6 +97,7 @@ const Input = ({
           required={required}
           disabled={disabled}
           rows={rows}
+          maxLength={maxLength}
           className={inputClasses}
           {...rest}
         />
@@ -85,6 +111,7 @@ const Input = ({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
+          maxLength={maxLength}
           className={inputClasses}
           {...rest}
         />
