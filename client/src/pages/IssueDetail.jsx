@@ -210,9 +210,7 @@ const IssueDetail = () => {
       {/* Header */}
       <div className="header">
         <div className="headerLeft">
-          <h1 className="title">
-            <span className="issueId">#{currentIssue.id}</span> {currentIssue.title}
-          </h1>
+          
           <div className="badges">
             <Badge variant={currentIssue.status} size="large">
               {currentIssue.status}
@@ -328,9 +326,9 @@ const IssueDetail = () => {
           // View mode
           <>
             <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-              <h3 style={{ marginBottom: 'var(--spacing-sm)', color: 'var(--gray-700)' }}>
-                Description
-              </h3>
+                <h1 className="title">
+                  <span className="issueId">#{currentIssue.id}</span> {currentIssue.title}
+                </h1>
               <p style={{ color: 'var(--gray-600)', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
                 {currentIssue.description}
               </p>
@@ -354,6 +352,15 @@ const IssueDetail = () => {
             </div>
 
             <div className="buttonGroup" style={{ marginTop: 'var(--spacing-xl)' }}>
+              <div>
+                <Button
+                  variant="danger"
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  Delete Issue
+                </Button>
+              </div>
+
               <div className="leftButtons">
                 {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
                   <Button
@@ -373,13 +380,6 @@ const IssueDetail = () => {
                   </Button>
                 )}
               </div>
-
-              <Button
-                variant="danger"
-                onClick={() => setShowDeleteModal(true)}
-              >
-                Delete Issue
-              </Button>
             </div>
           </>
         )}
