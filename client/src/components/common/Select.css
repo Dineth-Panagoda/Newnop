@@ -8,6 +8,7 @@
   flex-direction: column;
   gap: 0.375rem;
   width: 100%;
+  position: relative;
 }
 
 /* Label */
@@ -24,7 +25,7 @@
 
 /* Select element */
 .select {
-  padding: 0.625rem 2rem 0.625rem 1rem;
+  padding: 0.625rem 2.5rem 0.625rem 1rem;
   font-size: 1rem;
   border: 1px solid #E0E0E0;
   border-radius: 120px;
@@ -33,6 +34,19 @@
   background-color: white;
   cursor: pointer;
   font-family: inherit;
+  appearance: none;
+}
+
+/* Custom dropdown arrow */
+.selectContainer::after {
+  content: '⌄';
+  position: absolute;
+  right: 1rem;
+  bottom: 10px;
+  font-size: 20px;
+  font-weight: 1000;
+  color: #616161;
+  pointer-events: none;
 }
 
 .select:focus {
