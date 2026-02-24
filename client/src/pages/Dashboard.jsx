@@ -447,7 +447,8 @@ const Dashboard = () => {
               </Button>
 
               <span className="pageInfo">
-                Page {pagination.currentPage} of {pagination.totalPages} ({pagination.totalCount} total issues)
+                    Page {pagination.currentPage} of {pagination.totalPages} <br></br>
+                    ({pagination.totalCount} total issues)
               </span>
 
               <Button

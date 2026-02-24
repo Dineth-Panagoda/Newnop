@@ -42,6 +42,7 @@ const IssueDetail = () => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
+  const [isNotificationClosing, setIsNotificationClosing] = useState(false);
 
   // Modal states
   const [showResolveModal, setShowResolveModal] = useState(false);
@@ -69,6 +70,27 @@ const IssueDetail = () => {
       });
     }
   }, [currentIssue]);
+
+  // Auto-hide notification after 3 seconds
+  useEffect(() => {
+    if (successMessage) {
+      // Start closing animation after 2.7 seconds
+      const closeTimer = setTimeout(() => {
+        setIsNotificationClosing(true);
+      }, 2700);
+
+      // Remove notification after animation completes (3 seconds total)
+      const removeTimer = setTimeout(() => {
+        setSuccessMessage('');
+        setIsNotificationClosing(false);
+      }, 3000);
+
+      return () => {
+        clearTimeout(closeTimer);
+        clearTimeout(removeTimer);
+      };
+    }
+  }, [successMessage]);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -207,6 +229,14 @@ const IssueDetail = () => {
 
   return (
     <div className="container">
+      {/* Success notification */}
+      {successMessage && (
+        <div className={`successNotification ${isNotificationClosing ? 'closing' : ''}`}>
+          <div className="notificationIcon">✓</div>
+          <span>{successMessage}</span>
+        </div>
+      )}
+
       {/* Header */}
       {!isEditing && (
         <div className="header">
@@ -238,9 +268,6 @@ const IssueDetail = () => {
       <Card>
         {/* Show error */}
         {error && <div className="errorAlert">{error}</div>}
-
-        {/* Show success message */}
-        {successMessage && <div className="successAlert">{successMessage}</div>}
 
         {isEditing ? (
           // Edit mode
