@@ -5,6 +5,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import './Navbar.css';
 import { logout } from '../redux/slices/authSlice';
 import Button from './common/Button';
@@ -16,6 +17,35 @@ const Navbar = () => {
   // Get user info from Redux store
   const { user } = useSelector((state) => state.auth);
 
+  // Scroll state
+  const [scrollDirection, setScrollDirection] = useState('up');
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isAtTop, setIsAtTop] = useState(true);
+
+  // Handle scroll behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+
+      // Check if at top
+      setIsAtTop(currentScrollPos < 10);
+
+      // Determine scroll direction
+      if (currentScrollPos > prevScrollPos && currentScrollPos > 80) {
+        // Scrolling down
+        setScrollDirection('down');
+      } else if (currentScrollPos < prevScrollPos) {
+        // Scrolling up
+        setScrollDirection('up');
+      }
+
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
+
   // Handle logout
   const handleLogout = () => {
     // Dispatch logout action (clears state and localStorage)
@@ -25,8 +55,11 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  // Determine navbar classes
+  const navClasses = `nav ${!isAtTop ? 'nav-shrunk' : ''} ${scrollDirection === 'down' && !isAtTop ? 'nav-hidden' : ''}`;
+
   return (
-    <nav className="nav">
+    <nav className={navClasses}>
       <div className="navContainer">
         {/* Logo */}
         <Link to="/dashboard" className="logo">
