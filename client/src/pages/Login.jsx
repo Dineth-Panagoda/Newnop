@@ -100,8 +100,8 @@ const Login = () => {
         IssueTrackr.
       </div>
       <Card className="loginCard">
-        <h1 className="title">Welcome Back</h1>
-        <p className="subtitle">Sign in to your account to continue</p>
+        <h1 className="authTitle">Welcome Back</h1>
+        <p className="authSubtitle">Sign in to your account to continue</p>
 
         {/* Show error from API if exists */}
         {error && <div className="errorAlert">{error}</div>}

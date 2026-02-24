@@ -119,8 +119,8 @@ const Register = () => {
         IssueTrackr.
       </div>
       <Card className="registerCard">
-        <h1 className="title">Create Account</h1>
-        <p className="subtitle">Sign up to start tracking issues</p>
+        <h1 className="authTitle">Create Account</h1>
+        <p className="authSubtitle">Sign up to start tracking issues</p>
 
         {/* Show error from API if exists */}
         {error && <div className="errorAlert">{error}</div>}

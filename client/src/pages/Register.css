@@ -30,7 +30,7 @@
   z-index: 10;
 }
 
-.title {
+.authTitle {
   margin: 0 0 0.5rem 0;
   font-size: 1.875rem;
   font-weight: 700;
@@ -38,7 +38,7 @@
   text-align: center;
 }
 
-.subtitle {
+.authSubtitle {
   margin: 0 0 1.5rem 0;
   font-size: 1rem;
   color: #757575;
