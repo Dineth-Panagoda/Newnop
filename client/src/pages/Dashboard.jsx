@@ -21,6 +21,57 @@ import Select from '../components/common/Select';
 import Badge from '../components/common/Badge';
 import Loader from '../components/common/Loader';
 
+// Custom hook for count-up animation
+const useCountUp = (end, duration = 1000) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime;
+    let animationFrame;
+
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+
+      // Ease-out function for smooth deceleration
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easeOut * end));
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    if (end > 0) {
+      animationFrame = requestAnimationFrame(animate);
+    } else {
+      setCount(0);
+    }
+
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [end, duration]);
+
+  return count;
+};
+
+// StatCard component with count-up animation
+const StatCard = ({ value, label, isLoading }) => {
+  const animatedValue = useCountUp(value);
+
+  return (
+    <Card className="statCard">
+      <div className="statValue">
+        {isLoading ? '...' : animatedValue}
+      </div>
+      <div className="statLabel">{label}</div>
+    </Card>
+  );
+};
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -121,40 +172,66 @@ const Dashboard = () => {
   };
 
   // Export issues to CSV
-  const handleExportCSV = () => {
-    const headers = ['ID', 'Title', 'Description', 'Status', 'Priority', 'Severity', 'Created At'];
-    const rows = issues.map(issue => [
-      issue.id,
-      `"${issue.title}"`,
-      `"${issue.description}"`,
-      issue.status,
-      issue.priority,
-      issue.severity,
-      new Date(issue.createdAt).toLocaleString()
-    ]);
+  const handleExportCSV = async () => {
+    try {
+      // Fetch all issues matching current filters
+      const result = await dispatch(fetchIssues({
+        page: 1,
+        limit: 10000,
+        ...filters
+      })).unwrap();
 
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.join(','))
-    ].join('\n');
+      const allIssues = result.issues || [];
 
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `issues-${new Date().toISOString().split('T')[0]}.csv`;
-    link.click();
+      const headers = ['ID', 'Title', 'Description', 'Status', 'Priority', 'Severity', 'Created At'];
+      const rows = allIssues.map(issue => [
+        issue.id,
+        `"${issue.title}"`,
+        `"${issue.description}"`,
+        issue.status,
+        issue.priority,
+        issue.severity,
+        new Date(issue.createdAt).toLocaleString()
+      ]);
+
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.join(','))
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `issues-${new Date().toISOString().split('T')[0]}.csv`;
+      link.click();
+    } catch (error) {
+      console.error('Failed to export CSV:', error);
+    }
   };
 
   // Export issues to JSON
-  const handleExportJSON = () => {
-    const jsonContent = JSON.stringify(issues, null, 2);
-    const blob = new Blob([jsonContent], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `issues-${new Date().toISOString().split('T')[0]}.json`;
-    link.click();
+  const handleExportJSON = async () => {
+    try {
+      // Fetch all issues matching current filters
+      const result = await dispatch(fetchIssues({
+        page: 1,
+        limit: 10000,
+        ...filters
+      })).unwrap();
+
+      const allIssues = result.issues || [];
+
+      const jsonContent = JSON.stringify(allIssues, null, 2);
+      const blob = new Blob([jsonContent], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `issues-${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+    } catch (error) {
+      console.error('Failed to export JSON:', error);
+    }
   };
 
   // Format date for display
@@ -225,33 +302,26 @@ const Dashboard = () => {
 
         {/* Statistics Cards */}
         <div className="statsGrid">
-          <Card className="statCard">
-            <div className="statValue">
-              {statsLoading ? '...' : stats.Open || 0}
-            </div>
-            <div className="statLabel">Open</div>
-          </Card>
-
-          <Card className="statCard">
-            <div className="statValue">
-              {statsLoading ? '...' : stats.InProgress || 0}
-            </div>
-            <div className="statLabel">In Progress</div>
-          </Card>
-
-          <Card className="statCard">
-            <div className="statValue">
-              {statsLoading ? '...' : stats.Resolved || 0}
-            </div>
-            <div className="statLabel">Resolved</div>
-          </Card>
-
-          <Card className="statCard">
-            <div className="statValue">
-              {statsLoading ? '...' : stats.Closed || 0}
-            </div>
-            <div className="statLabel">Closed</div>
-          </Card>
+          <StatCard
+            value={stats.Open || 0}
+            label="Open"
+            isLoading={statsLoading}
+          />
+          <StatCard
+            value={stats.InProgress || 0}
+            label="In Progress"
+            isLoading={statsLoading}
+          />
+          <StatCard
+            value={stats.Resolved || 0}
+            label="Resolved"
+            isLoading={statsLoading}
+          />
+          <StatCard
+            value={stats.Closed || 0}
+            label="Closed"
+            isLoading={statsLoading}
+          />
         </div>
       </div>
 

@@ -208,30 +208,32 @@ const IssueDetail = () => {
   return (
     <div className="container">
       {/* Header */}
-      <div className="header">
-        <div className="headerLeft">
-          
-          <div className="badges">
-            <Badge variant={currentIssue.status} size="large">
-              Status: {currentIssue.status}
-            </Badge>
-            <Badge variant={currentIssue.priority} size="large">
-              Priority: {currentIssue.priority}
-            </Badge>
-            <Badge variant={currentIssue.severity} size="large">
-              Severity: {currentIssue.severity}
-            </Badge>
+      {!isEditing && (
+        <div className="header">
+          <div className="headerLeft">
+            <div className="badges">
+              <Badge variant={currentIssue.status} size="large">
+                Status: {currentIssue.status}
+              </Badge>
+              <Badge variant={currentIssue.priority} size="large">
+                Priority: {currentIssue.priority}
+              </Badge>
+              <Badge variant={currentIssue.severity} size="large">
+                Severity: {currentIssue.severity}
+              </Badge>
+            </div>
+
+          </div>
+
+          <div className="headerActions">
+            <Button variant="ghost" size="small" onClick={() => navigate('/dashboard')}>
+              ← Back
+            </Button>
+
+
           </div>
         </div>
-
-        <div className="headerActions">
-          <Button variant="ghost" size="small" onClick={() => navigate('/dashboard')}>
-            ← Back
-          </Button>
-
-          
-        </div>
-      </div>
+      )}
 
       <Card>
         {/* Show error */}
@@ -327,7 +329,7 @@ const IssueDetail = () => {
                   #{currentIssue.id} - {currentIssue.title}
                 </h1>
                 {!isEditing && (
-                    <Button variant="outline" size="small" onClick={() => setIsEditing(true)}>
+                  <Button variant="outline" size="small" onClick={() => setIsEditing(true)}>
                     Edit
                   </Button>
                 )}
@@ -374,17 +376,17 @@ const IssueDetail = () => {
                   >
                     Mark as Closed
                   </Button>
-                  )}
-                  
-                  {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
-                    <Button
-                      variant="primary"
-                      onClick={() => setShowResolveModal(true)}
-                    >
-                      Mark as Resolved
-                    </Button>
-                    
-                  )}
+                )}
+
+                {currentIssue.status !== 'Resolved' && currentIssue.status !== 'Closed' && (
+                  <Button
+                    variant="primary"
+                    onClick={() => setShowResolveModal(true)}
+                  >
+                    Mark as Resolved
+                  </Button>
+
+                )}
               </div>
             </div>
           </>
