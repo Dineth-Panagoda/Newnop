@@ -30,6 +30,7 @@
   overflow-wrap: break-word;
   min-width: 0;
   flex: 1;
+  text-align: left !important;
 }
 
 .titleEditContainer {

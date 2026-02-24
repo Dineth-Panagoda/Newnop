@@ -36,8 +36,6 @@
   border: 1px solid #F5F5F5;
 }
 
-
-
 .statValue {
   font-size: 2.25rem;
   font-weight: 700;
@@ -51,6 +49,45 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
+}
+
+/* Responsive Stats Grid */
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .statCard {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .statValue {
+    font-size: 2rem;
+  }
+
+  .statLabel {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .statCard {
+    padding: 1.25rem 0.75rem !important;
+  }
+
+  .statValue {
+    font-size: 1.75rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+  }
 }
 
 /* Filters Section */
