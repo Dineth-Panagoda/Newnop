@@ -183,6 +183,12 @@ const Dashboard = () => {
     let description = `${count} ${issueWord}`;
     let hasAddedFilter = false;
 
+    // Add search query if present
+    if (filters.search) {
+      description += ` for "${filters.search}"`;
+      hasAddedFilter = true;
+    }
+
     if (filters.status) {
       description += ` in ${filters.status} status`;
       hasAddedFilter = true;

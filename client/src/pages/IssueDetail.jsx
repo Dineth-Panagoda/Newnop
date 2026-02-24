@@ -398,7 +398,7 @@ const IssueDetail = () => {
         title="Mark as Resolved"
         message="Are you sure you want to mark this issue as resolved?"
         confirmText="Yes, Mark as Resolved"
-        confirmVariant="success"
+        confirmVariant="primary"
         onConfirm={handleMarkResolved}
         loading={actionLoading}
       />
