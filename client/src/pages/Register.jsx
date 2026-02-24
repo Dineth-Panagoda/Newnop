@@ -12,6 +12,7 @@ import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import Card from '../components/common/Card';
 import Aurora from '../components/common/Aurora';
+import ShinyText from '../components/common/ShinyText';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -115,6 +116,16 @@ const Register = () => {
   return (
     <div className="pageContainer">
       <Aurora colorStops={["#00c7fc", "#7cff67", "#ffffff"]} amplitude={0.5} blend={1} />
+      <div className="authLogo shiny-text-trigger">
+        <ShinyText
+          text="IssueTrackr."
+          speed={5}
+          color="#FFFFFF"
+          shineColor="#76FF03"
+          spread={120}
+          direction="left"
+        />
+      </div>
       <Card className="registerCard">
         <h1 className="title">Create Account</h1>
         <p className="subtitle">Sign up to start tracking issues</p>

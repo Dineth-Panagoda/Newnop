@@ -12,6 +12,16 @@
   background: #1a3d1a;
 }
 
+.authLogo {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  font-size: 24px;
+  font-weight: 700;
+  z-index: 20;
+  cursor: pointer;
+}
+
 .registerCard {
   max-width: 440px;
   width: 100%;
